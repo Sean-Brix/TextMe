@@ -2,25 +2,33 @@ import { useEffect, useRef, useState } from "react"
 
 export default function Login(){
 
-    const username = useRef();
-    const password = useRef();
-    const [account, setAccount]= useState({username: "", password: ""});
+    const usernameRef = useRef();
+    const passwordRef = useRef();
+    const [response, setResponse] = useState('');
 
     const submitForm = async (e)=>{
         e.preventDefault();
 
-        setAccount({password: password.current.value, username: username.current.value});
+        const authenticate_account = {
+            username: usernameRef.current.value,
+            password: passwordRef.current.value,
+        };
 
         // Request Authentication
+        const response = await fetch('http://127.0.0.1:3000/auth/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(authenticate_account)
+        });
 
-        const validate = true;
-        if(validate){
-            // Route
-        }
+        const data = await response.json();
+        setResponse(data.message);
 
         // Reset Inputs
-        username.current.value = ""
-        password.current.value = ""
+        usernameRef.current.value = ""
+        passwordRef.current.value = ""
     }
 
     return (
@@ -28,10 +36,12 @@ export default function Login(){
 
             <form onSubmit={submitForm}>
 
-                <input type="text" placeholder = "Username" ref={username}/>
-                <input type="text" placeholder = "Password" ref={password}/>
+                <input type="text" placeholder = "Username" ref={usernameRef}/>
+                <input type="text" placeholder = "Password" ref={passwordRef}/>
 
                 <button type="submit">Login</button>
+
+                <h1>{response}</h1>
 
             </form>
 

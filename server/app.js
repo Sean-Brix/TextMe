@@ -5,6 +5,7 @@ import store from 'connect-mongo';
 import dotenv from 'dotenv';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import cors from 'cors'
 
 // Configuration
 dotenv.config();
@@ -35,6 +36,10 @@ app.use(
         },
     })
 );
+app.use(cors({
+    origin: 'http://localhost:5173',
+    methods: ['POST', 'GET']
+}))
 
 // Request Routes
 import index_rt from './Routes/index_rt.js';
