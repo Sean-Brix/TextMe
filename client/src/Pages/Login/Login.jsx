@@ -1,12 +1,12 @@
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useRef, useState } from 'react';
+import style from './Login.module.css';
+import { Link } from 'react-router-dom';
 
-export default function Login(){
-
+export default function Login() {
     const usernameRef = useRef();
     const passwordRef = useRef();
-    const [response, setResponse] = useState('');
-
-    const submitForm = async (e)=>{
+ 
+    const submitForm = async (e) => {
         e.preventDefault();
 
         const authenticate_account = {
@@ -18,34 +18,46 @@ export default function Login(){
         const response = await fetch('http://127.0.0.1:3000/auth/login', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
             },
-            body: JSON.stringify(authenticate_account)
+            body: JSON.stringify(authenticate_account),
         });
 
         const data = await response.json();
-        setResponse(data.message);
 
         // Reset Inputs
-        usernameRef.current.value = ""
-        passwordRef.current.value = ""
-    }
+        usernameRef.current.value = '';
+        passwordRef.current.value = '';
+    };
 
     return (
-        <div>
+        <div className={style.container}>
+            <form onSubmit={submitForm} className={style.loginForm}>
+                
+                <div className={style.inputDiv}>
+                    <label htmlFor="username">Username</label>
+                    <input
+                        type="text"
+                        id="username"
+                        placeholder="Username"
+                        ref={usernameRef}
+                    />
+                </div>
 
-            <form onSubmit={submitForm}>
+                <div className={style.inputDiv}>
+                    <label htmlFor="password">Password</label>
+                    <input
+                        type="text"
+                        id="password"
+                        placeholder="Password"
+                        ref={passwordRef}
+                    />
+                </div>
 
-                <input type="text" placeholder = "Username" ref={usernameRef}/>
-                <input type="text" placeholder = "Password" ref={passwordRef}/>
-
-                <button type="submit">Login</button>
-
-                <h1>{response}</h1>
+                <button type="submit" className={style.signIn_button}>Login</button>
+                <Link to="/register">Register an Account</Link>
 
             </form>
-
         </div>
-    )
-
+    );
 }

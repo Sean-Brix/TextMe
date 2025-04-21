@@ -9,7 +9,7 @@
 
 }
 
-.loginForm{
+.registerForm{
 
     width: 50%;
     height: 70%;
@@ -38,7 +38,7 @@
     }
 }
 
-.signIn_button{
+.signUp_button{
     width: 200px;
     height: 30px;
 }

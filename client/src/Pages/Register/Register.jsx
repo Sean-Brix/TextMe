@@ -1,4 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
+import style from './Register.module.css'
+import { Link } from 'react-router-dom';
 
 export default function Register() {
     const usernameRef = useRef();
@@ -37,13 +39,25 @@ export default function Register() {
     };
 
     return (
-        <div>
-            <form onSubmit={submitForm}>
-                <input type="text" placeholder="Username" ref={usernameRef} />
-                <input type="text" placeholder="Email" ref={emailRef} />
-                <input type="text" placeholder="Password" ref={passwordRef} />
+        <div className={style.container}>
+            <form onSubmit={submitForm} className={style.registerForm}>
+                <div className={style.inputDiv}>
+                    <label htmlFor="username">Username</label>
+                    <input type="text" placeholder="Username" ref={usernameRef} />
+                </div>
 
-                <button type="submit">Sign Up</button>
+                <div className={style.inputDiv}>
+                    <label htmlFor="username">Email</label>
+                    <input type="text" placeholder="Email" ref={emailRef} />
+                </div>
+                
+                <div className={style.inputDiv}>
+                    <label htmlFor="username">Password</label>
+                    <input type="text" placeholder="Password" ref={passwordRef} />
+                </div>
+
+                <button type="submit" className={style.signUp_button}>Sign Up</button>
+                <Link to="/">Already have an account?</Link>
 
                 <h1>{response}</h1>
             </form>

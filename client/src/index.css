@@ -1,3 +1,9 @@
-body{
-    background-color: rgb(211, 250, 197);
+body, html, #root{
+    background-color: #d3fac5;
+    height: 100vh;
+    width: 100%;
+
+    padding: 0;
+    margin: 0;
 }
+
