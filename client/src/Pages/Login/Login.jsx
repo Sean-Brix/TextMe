@@ -1,11 +1,12 @@
 import { useEffect, useRef, useState } from 'react';
 import style from './Login.module.css';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 export default function Login() {
     const usernameRef = useRef();
     const passwordRef = useRef();
- 
+    const navigate = useNavigate();
+
     const submitForm = async (e) => {
         e.preventDefault();
 
@@ -24,6 +25,9 @@ export default function Login() {
         });
 
         const data = await response.json();
+        if(response.ok){
+            navigate('/register');
+        }
 
         // Reset Inputs
         usernameRef.current.value = '';
