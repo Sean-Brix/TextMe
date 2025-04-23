@@ -26,7 +26,7 @@ export default function Login() {
 
         const data = await response.json();
         if(response.ok){
-            navigate('/register');
+            navigate('/Chat');
         }
 
         // Reset Inputs
