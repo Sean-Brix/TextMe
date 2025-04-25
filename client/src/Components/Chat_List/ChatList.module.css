@@ -1,8 +1,82 @@
 .container{
-    height: 100%;
-    width: 300px;
-    border-right: 1px solid black;
+    height: 98%;
+    width: 25%;
+    min-width: 300px;
+    border: 1px solid black;
+    border-radius: 20px;
+    margin: 10px;
+    background-color: rgba(3, 224, 227, 0.324);
 
     display: flex;
     flex-direction: column;
+    align-items: center;
+
+    box-sizing: border-box;
+}
+
+/* HEADER PART */
+.header{
+    width: 85%;
+}
+
+.header h1{
+    margin: 20px -10px;
+    font-family: var(--font-family-head);
+    font-size: 2rem;
+}
+.search_container{
+    width: 100%;
+    margin-bottom: 20px;
+    position: relative;
+}
+.search_icon{
+    width: 20px;
+    height: 20px;
+    z-index: 1;
+    
+    position: absolute;
+    left: 8px;
+    top: 5px;
+}
+.search_messages{
+    width: 100%;
+    height: 30px;
+    text-justify: center;
+
+    border: 1px solid black;
+    outline: 0;
+    border-radius: 20px;
+    box-sizing: border-box;
+    padding-top: 3px;
+    padding-left: 30px;
+    position: relative;
+}
+
+
+/* FRIEND LIST */
+.friend_container{
+    width: 95%;
+    height: 10%;
+    padding: 0 20px;
+
+    box-sizing: border-box;
+    transition: 0.5s ease;
+}
+.friend_container:hover{
+    background-color: rgba(174, 225, 240, 0.518);
+    border: 1px solid black;
+    border-radius: 15px;
+    cursor: pointer;
+}
+
+.friend_name{
+    margin: 0;
+    text-justify: center;
+    font-size: 1.5rem;
+    font-family: var(--font-family-head);
+}
+
+.friend_email{
+    text-justify: center;
+    margin: 0;
 }
