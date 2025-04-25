@@ -64,6 +64,8 @@
     font-size: 1rem;
 }
 
+
+/* ICONS */
 .send_icon{
     width: 25px;
     height: 20px;
@@ -73,5 +75,27 @@
 }
 
 .send_icon:hover{
+    transform: scale(1.1) rotate(-10deg);
+}
+
+.add_folder_icon{
+    width: 30px;
+    height: 25px;
+    
+    cursor: pointer;
+    transition: 0.5s ease;
+}
+.add_folder_icon:hover{
+    transform: scale(1.2) rotate(10deg);
+}
+
+.image_icon{
+    width: 25px;
+    height: 25px;
+    
+    cursor: pointer;
+    transition: 0.5s ease;
+}
+.image_icon:hover{
     transform: scale(1.2) rotate(-10deg);
 }
