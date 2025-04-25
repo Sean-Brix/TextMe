@@ -53,7 +53,7 @@
 .user_input{
     width: 80%;
     height: 60%;
-
+    outline: 0;
     border: 1px solid black;
     border-radius: 20px;
     padding: 0 15px;

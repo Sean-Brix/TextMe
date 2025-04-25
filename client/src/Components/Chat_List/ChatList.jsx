@@ -14,7 +14,7 @@ export default function ChatList({ friends }) {
                     <input type="text" placeholder="Search Messages" className={style.search_messages}/>
                 </div>
             </div>
-
+            
             {friends.map((friend, index) => {
                 return (
                     <div key={`container:${index}`} className={style.friend_container}>
