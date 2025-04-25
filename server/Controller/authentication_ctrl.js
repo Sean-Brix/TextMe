@@ -80,3 +80,21 @@ export async function register(req, res, next) {
         return res.status(500).json({ error: error.message });
     }
 }
+
+export async function sessionDestroy(req, res ,next){
+    req.session.destroy((err)=>{
+
+        if (err) {
+            console.error('Failed to destroy session:', err);
+            return res.status(500).json({
+                message: "Server Error, Could not logout"
+            });
+        }
+
+        res.clearCookie('connect.sid');
+        res.status(200).json({
+        message: "Session Destroyed"
+        })
+
+    });
+}

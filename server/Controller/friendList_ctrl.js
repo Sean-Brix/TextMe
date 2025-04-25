@@ -15,8 +15,6 @@ export async function getAccountList(req, res, next){
             password: 0,
         }).limit(limit);
 
-        console.log(accounts);
-
         res.status(200).json({friendList: accounts});
 
     } catch (error) {
