@@ -3,6 +3,7 @@ import search_icon from '../../assets/search.png'
 import style from './ChatList.module.css';
 
 export default function ChatList({ friends }) {
+    
     return (
         <main className={style.container}>
 

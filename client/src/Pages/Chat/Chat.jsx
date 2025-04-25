@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Navigation from '../../Components/Navigation/Navigation';
 import style from './Chat.module.css';
 import ChatList from '../../Components/Chat_List/ChatList';
+import Chat_Box from '../../Components/Chat_Box/Chat_Box';
 
 export default function Chat() {
 
@@ -27,6 +28,7 @@ export default function Chat() {
             
             <ChatList friends={friends}/>
 
+            <Chat_Box />
         </main>
     );
 }

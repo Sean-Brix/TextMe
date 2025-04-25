@@ -22,6 +22,11 @@ const accountSchema = new mongoose.Schema({
         required: true,
     },
 
+    friend_list: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Account'
+    }],
+
     createdAt: {
         type: Date,
         default: ()=> new Date(),
