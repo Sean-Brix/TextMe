@@ -73,7 +73,7 @@
 }
 
 .friend_container:hover{
-    background-color: rgba(174, 225, 240, 0.518);
+    background-color: var(--hover-color);
     border: 1px solid black;
     border-radius: 15px;
     cursor: pointer;

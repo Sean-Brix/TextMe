@@ -10,13 +10,9 @@ export default function Chat() {
 
     const [friends, setFriends] = useState([]);
     const navigate = useNavigate();
-    const hasRun = useRef(false);
 
     // Request all friends
     useEffect(() => {
-
-        if(hasRun.current) return;
-        hasRun.current = true;
 
         const fetchData = async () => {
             const authentication = await SessionCheck();
