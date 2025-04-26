@@ -11,10 +11,7 @@ const PORT = process.env.PORT || 3000;
 const DB_URI = process.env.MONGO_URI;
 
 // Database
-mongoose.connect(DB_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-});
+mongoose.connect(DB_URI);
 
 // Server
 const server = http.createServer(app);

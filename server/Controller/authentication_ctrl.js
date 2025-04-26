@@ -21,15 +21,24 @@ export async function login(req, res, next) {
         // store user session
         req.session.userId = user._id;
         req.session.username = user.username;
-
-        // successful login
-        return res.status(200).json({
-            message: "Login successful",
-            user: {
-                id: user._id,
-                username: user.username
+        
+        req.session.save((err)=>{
+            if(err){
+                return res.status(500).json({
+                    error: err
+                })
             }
-        });
+
+            // successful login
+            return res.status(200).json({
+                message: "Login successful",
+                user: {
+                    id: user._id,
+                    username: user.username
+                }
+            });
+
+        })
 
     } 
     
@@ -97,4 +106,26 @@ export async function sessionDestroy(req, res ,next){
         })
 
     });
+}
+
+export async function session_check(req, res, next){
+
+    try{
+        if(req.session.userId){
+            return res.status(200).json({
+                authenticated: true
+            })
+        }
+        
+        res.status(401).json({
+            authenticated: false
+        })
+    }
+    catch(err){
+        console.log("Session Check Error: " + err);
+        res.status(500).json({
+            error: err
+        })
+    }
+    
 }

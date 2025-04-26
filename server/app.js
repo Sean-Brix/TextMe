@@ -31,14 +31,17 @@ app.use(
         resave: false,
         saveUninitialized: false,
         cookie: {
+            secure: process.env.NODE_ENV === 'production'? true : false,
             maxAge: 1000 * 60 * 60 * 24, // 24 hours
             httpOnly: true,
+            sameSite: "Lax"
         },
     })
 );
 app.use(cors({
     origin: 'http://localhost:5173',
-    methods: ['POST', 'GET']
+    methods: ['POST', 'GET'],
+    credentials: true,
 }))
 
 // Request Routes

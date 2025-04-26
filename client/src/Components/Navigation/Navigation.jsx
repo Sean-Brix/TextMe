@@ -9,7 +9,7 @@ export default function Navigation() {
   const logout = async () => {
     try {
       
-      const response = await fetch('http://127.0.0.1:3000/auth/logout');
+      const response = await fetch('/auth/logout');
       const data = await response.json();
       
       if (response.ok) {

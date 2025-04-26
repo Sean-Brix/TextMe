@@ -5,10 +5,14 @@ import { Link, useNavigate } from 'react-router-dom';
 export default function Login() {
     const usernameRef = useRef();
     const passwordRef = useRef();
+    const hasRun = useRef(false);
     const navigate = useNavigate();
 
     const submitForm = async (e) => {
         e.preventDefault();
+
+        if(hasRun.current) return;
+        hasRun.current = true;
 
         const authenticate_account = {
             username: usernameRef.current.value,
@@ -16,8 +20,9 @@ export default function Login() {
         };
 
         // Request Authentication
-        const response = await fetch('http://127.0.0.1:3000/auth/login', {
+        const response = await fetch('/auth/login', {
             method: 'POST',
+            credentials: 'include',
             headers: {
                 'Content-Type': 'application/json',
             },
@@ -26,8 +31,10 @@ export default function Login() {
 
         const data = await response.json();
         if(response.ok){
-            navigate('/Chat');
+            return navigate('/Chat');
         }
+
+        hasRun.current = false;
 
         // Reset Inputs
         usernameRef.current.value = '';
