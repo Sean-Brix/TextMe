@@ -52,7 +52,7 @@
 
 .message_profile{
     height: 100%;
-    width: 25%;
+    width: 100%;
     min-width: 160px;
     padding: 0 25px;
 
@@ -77,13 +77,14 @@
     
     border: 2px solid black;
     border-radius: 50px;
-    margin-right: 8%;
+    margin-right: 2%;
     cursor: pointer;
 }
 
 .profile_details{
+    min-width: 100px;
+
     font-family: var(--font-family-head);
-    position: relative;
     cursor: pointer;
 
     .profile_name{
@@ -98,22 +99,27 @@
         text-decoration: underline;
         font-style: italic;
     }
-    p{
+
+    .active{
+        width: 100px;
+
         margin: 0;
         font-size: 0.8rem;
+        position: relative;
 
+        div{
+            background-color: #17ce42;
+            width: 10px;
+            height: 10px;
+            border: 1px solid rgb(52, 72, 49);
+            border-radius: 20px;
+    
+            position: absolute;
+            right: 20px;
+            bottom: 1px;
+        }
     }
-    div{
-        background-color: #17ce42;
-        width: 10px;
-        height: 10px;
-        border: 1px solid rgb(52, 72, 49);
-        border-radius: 20px;
-
-        position: absolute;
-        right: 22px;
-        bottom: 1px;
-    }
+   
 }
 
 .stream_icons{

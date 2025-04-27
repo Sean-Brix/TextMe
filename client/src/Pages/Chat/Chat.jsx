@@ -2,7 +2,6 @@ import React, { useEffect, useState, useRef } from 'react';
 import Navigation from '../../Components/Navigation/Navigation';
 import style from './Chat.module.css';
 import ChatList from '../../Components/Chat_List/ChatList';
-import Chat_Box from '../../Components/Chat_Box/Chat_Box';
 import SessionCheck from '../../Components/Authentication/SessionCheck';
 import { useNavigate } from 'react-router-dom';
 
@@ -30,6 +29,7 @@ export default function Chat() {
                 }
             );
             const data = await response.json();
+
             setFriends(data.friendList);
         };
 
@@ -41,11 +41,11 @@ export default function Chat() {
 
     return (
         <main className={style.container}>
+            
             <Navigation />
 
             <ChatList friends={friends} />
 
-            <Chat_Box />
         </main>
     );
 }

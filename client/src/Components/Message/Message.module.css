@@ -4,7 +4,6 @@
 
     box-sizing: border-box;
 
-    
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -25,6 +24,7 @@
     justify-content: start;
 }
 
+
 /* Message Design */
 .message_background{
     max-width: 70%;
@@ -34,6 +34,8 @@
     border-radius: 20px;
 
     box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 0.75rem;
 
     display: flex;
     flex-direction: row;

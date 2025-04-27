@@ -14,14 +14,17 @@ import audioCall_icon from '../../assets/phoneCall.png'
 import videoCall_icon from '../../assets/videoCall.png'
 import setting_icon from '../../assets/setting.png'
 
-export default function Chat_Box() {
+export default function Chat_Box({user}) {
 
   const scrollRef = useRef(null);
   const messageRef = useRef('');
 
   useEffect(()=>{
     
-    // Fetch for request (Send get request to load all existing messages)
+    // TODO: Fetch for request (Send get request to load all existing messages)
+    // TODO: user props will contain all the details of the person to message such as name and account ID
+
+    // Get the scoll to the bottom
     scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
 
   }, [])
@@ -36,9 +39,13 @@ export default function Chat_Box() {
             <img src={default_profile} alt="Embed File" className={style.default_profile}/>
 
             <div className={style.profile_details}>
-              <Link to="/" className={style.profile_name}> Ethel Joy </Link>
-              <p>Active now </p>
-              <div></div>
+              
+              <Link to="/" className={style.profile_name}> {user.name} </Link>
+              
+              <div className={style.active}> 
+                Active now <div>{/* Green Color */}</div>
+              </div>
+              
             </div>
 
           </div>
@@ -53,15 +60,8 @@ export default function Chat_Box() {
 
         <main className={style.chat_box} ref={scrollRef}>
           <Message sender={{'name':'current'}} message="This is a sample message from the client"/>
-          <Message sender={{'name':'other'}} message="Another message but from other people, i made this elongated to see how text will react on lengthy messages"/>
-          <Message sender={{'name':'current'}} message="Another message but from other people, i made this elongated to see how text will react on lengthy messages"/>
-          <Message sender={{'name':'other'}} message="This is a sample message from the client"/>
-          <Message sender={{'name':'other'}} message="This is a sample message from the client"/>
-          <Message sender={{'name':'current'}} message="Another message but from other people, i made this elongated to see how text will react on lengthy messages"/>
-          <Message sender={{'name':'current'}} message="This is a sample message from the client"/>
-          <Message sender={{'name':'other'}} message="Another message but from other people, i made this elongated to see how text will react on lengthy messages"/>
-          <Message sender={{'name':'current'}} message="This is a sample message from the client"/>
-          <Message sender={{'name':'other'}} message="Another message but from other people, i made this elongated to see how text will react on lengthy messages"/>
+          <Message sender={{'name':'other'}} message="Another message but from other people, i made this elongated to see how text will react on lengthy messages and it looks good so far, it shouldnt be a problem then."/>
+          <Message sender={{'name':'current'}} message="Try a little one"/>
         </main>
 
         <div className={style.input_div}>
