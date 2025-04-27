@@ -7,32 +7,18 @@ import { useNavigate } from 'react-router-dom';
 
 export default function Chat() {
 
-    const [friends, setFriends] = useState([]);
     const navigate = useNavigate();
 
-    // Request all friends
+    // Authenticate
     useEffect(() => {
 
         const fetchData = async () => {
             const authentication = await SessionCheck();
-
             if (!authentication) {
                 navigate('/');
                 return;
             }
-
-            const response = await fetch(
-                '/api/friends/list/10',
-                {
-                    method: 'GET',
-                    credentials: 'include'
-                }
-            );
-            const data = await response.json();
-
-            setFriends(data.friendList);
         };
-
         fetchData();
 
         return;
@@ -43,8 +29,7 @@ export default function Chat() {
         <main className={style.container}>
             
             <Navigation />
-
-            <ChatList friends={friends} />
+            <ChatList />
 
         </main>
     );

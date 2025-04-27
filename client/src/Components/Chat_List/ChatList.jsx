@@ -4,31 +4,47 @@ import style from './ChatList.module.css';
 import Chat_Box from '../../Components/Chat_Box/Chat_Box';
 import default_profile from '../../assets/userProfile.png'
 
-export default function ChatList({ friends }) {
+export default function ChatList() {
 
+    const [friends, setFriends] = useState([]);
     const [selected, setSelected] = useState({});
     const prev_selected = useRef(null);
 
+    // INITIAL SETUP
     useEffect(()=>{
-        setSelected({
-            user: friends[0],
-            target: prev_selected.current
-        });
 
-        if(selected.target){
-            selected.target.className = style.selected_friend;
-        }
+        // Fetch the list
+        (async()=>{
+            const response = await fetch(
+                '/api/friends/list/10',
+                {
+                    method: 'GET',
+                    credentials: 'include'
+                }
+            );
+            const data = await response.json();
 
-    }, [friends])
+            // for rendering friend list
+            setFriends(data.friendList);
 
+            // Set initial selected user
+            setSelected({
+                user: data.friendList[0],
+                target: prev_selected.current
+            });
+        })()
+
+    }, [])
+
+    // USER SELECTION
     const messageSelect = (event, user)=>{
         event.preventDefault();
 
-        // Replace Styles
+        // Exchange styles on click
         prev_selected.current.className = style.friend_container;
         event.currentTarget.className = style.selected_friend;
 
-        // Change Values and rerender
+        // Save previous selected user
         prev_selected.current = event.currentTarget;
         setSelected({
             user: user, 
@@ -50,12 +66,19 @@ export default function ChatList({ friends }) {
                 
                 {friends.map((friend, index) => {
                     return (
-                        <div onClick={e=>{messageSelect(e, friend)}} key={`container:${index}`} className={style.friend_container} ref={index===0? prev_selected:null}>
+                        <div 
+                            onClick={e=>{messageSelect(e, friend)}} 
+                            key={`container:${index}`} 
+                            ref={index===0? prev_selected:null}
+                            className={index===0? style.selected_friend : style.friend_container} 
+                        >
+
                             <img src={default_profile} alt="" className={style.default_profile}/>
                             <div>
                                 <h1 className={style.friend_name}> {friend.username} </h1>
                                 <p className={style.friend_email}> {friend.email} </p>
                             </div>
+
                         </div>
                     );
                 })}
@@ -64,9 +87,6 @@ export default function ChatList({ friends }) {
             
             { selected.user && <Chat_Box user={{ name: selected.user.username}} /> }
 
-
-
-            
         </>
     );
 }

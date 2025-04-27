@@ -2,6 +2,9 @@ import React from 'react'
 import style from './Navigation.module.css'
 import {useNavigate} from 'react-router-dom'
 
+// ICONS
+import people_icon from '../../assets/people_icon.png'
+
 export default function Navigation() {
 
   const navigate = useNavigate()
@@ -29,9 +32,12 @@ export default function Navigation() {
 
     <div className={style.container}>
 
-        <div className={style.profile}>
+      <div className={style.navigation}>
 
-        </div>
+        <img src="#" alt="o" className={style.profile}/>
+        <img src={people_icon} alt="" className={style.people_icon}/>
+
+      </div>
 
         <button className={style.logout} onClick={logout}>Logout</button>
 

@@ -9,4 +9,5 @@ router.post('/register', register)
 router.get('/logout', sessionDestroy)
 router.get('/check', session_check)
 
+
 export default router;
