@@ -1,0 +1,52 @@
+/* Positioning */
+.container_current, .container_other{
+    width: 100%;
+
+    box-sizing: border-box;
+
+    
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.container_current{
+    padding: 5px 25px;
+
+    justify-content: end;
+
+    img{
+        display: none;
+    }
+}
+.container_other{
+    padding: 5px 15px;
+
+    justify-content: start;
+}
+
+/* Message Design */
+.message_background{
+    max-width: 70%;
+
+    padding: 0 15px;
+    border: 1px solid black;
+    border-radius: 20px;
+
+    box-sizing: border-box;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
+    align-items: center;
+}
+
+.default_profile{
+    width: 40px;
+    height: 40px;
+    
+    border: 2px solid black;
+    border-radius: 50px;
+    margin-right: 15px;
+    cursor: pointer;
+}

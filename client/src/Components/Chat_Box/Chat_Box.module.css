@@ -12,6 +12,26 @@
     justify-content: space-between;
 }
 
+
+/* MESSAGES */
+.chat_box{
+    width: 100%;
+    height: 100%;
+
+    border: 1px solid black;
+
+    box-sizing: border-box;
+
+    display: flex;
+    flex-direction: column;
+
+    justify-content: start;
+    align-items: space-between;
+
+    overflow-y: auto;
+}
+
+
 /* HEADER */
 .header{
     width: 100%;
@@ -144,19 +164,11 @@
 }
 
 
-
-/* MESSAGES */
-.chat_box{
-    width: 100%;
-    height: 100%;
-    border: 1px solid black;
-}
-
-
 /* USER INPUT */
 .input_div{
     width: 100%;
     height: 70px;
+    z-index: 5px;
 
     background-color: var(--primary-color);
 
