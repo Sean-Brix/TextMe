@@ -62,6 +62,10 @@ export default function Chat_Box({user}) {
           <Message sender={{'name':'current'}} message="This is a sample message from the client"/>
           <Message sender={{'name':'other'}} message="Another message but from other people, i made this elongated to see how text will react on lengthy messages and it looks good so far, it shouldnt be a problem then."/>
           <Message sender={{'name':'current'}} message="Try a little one"/>
+          <Message sender={{'name':'current'}} message="Imma try a longer one on this side to make sure both side are good enough to handle big stuff."/>
+          <Message sender={{'name':'other'}} message="Why do you care so much"/>
+          <Message sender={{'name':'other'}} message="That you even have the time to read these messages"/>
+          <Message sender={{'name':'current'}} message="Well im bored, i got nothing else to do so leave me be"/>
         </main>
 
         <div className={style.input_div}>

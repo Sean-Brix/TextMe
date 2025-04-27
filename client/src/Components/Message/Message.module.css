@@ -7,6 +7,7 @@
     display: flex;
     flex-direction: row;
     align-items: center;
+
 }
 
 .container_current{
@@ -17,11 +18,19 @@
     img{
         display: none;
     }
+    
+    div{
+        background-color: var(--primary-color);
+    }
 }
 .container_other{
     padding: 5px 15px;
 
     justify-content: start;
+
+    div{
+        background-color: var(--hover-color);
+    }
 }
 
 
