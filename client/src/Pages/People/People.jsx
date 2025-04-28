@@ -2,17 +2,30 @@ import React, { useEffect } from 'react'
 import style from './People.module.css'
 import { useState, useRef } from 'react'
 import Profile from './Sub/Profile'
+import { useNavigate } from 'react-router-dom';
+import SessionCheck from '../../Components/Authentication/SessionCheck';
+import Navigation from '../../Components/Navigation/Navigation.jsx'
 
 // ICON
 import default_profile from '../../assets/userProfile.png'
 
 export default function People() {
 
+    const navigate = useNavigate();
     const [List, setList] = useState([]);
     const [selected, setSelected] = useState({});
     const prev_Selected = useRef(null);
 
     useEffect(()=>{
+
+        // SESSION CHECK
+        (async () => {
+            const authentication = await SessionCheck();
+            if (!authentication) {
+                navigate('/');
+                return;
+            }
+        })();
 
         // Fetch the list
         (async()=>{
@@ -55,6 +68,8 @@ export default function People() {
   return (
 
     <div className={style.container}>
+
+        <Navigation />
         
         <div className={style.list_container}>
             {

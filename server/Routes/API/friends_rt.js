@@ -1,17 +1,15 @@
 import express from 'express';
-import { getAccountList } from '../../Controller/friendList_ctrl.js'
+import { getAccountList, addFriend, checkFriend, unfriend } from '../../Controller/friendList_ctrl.js'
 
 // Route: ('/api/friends')
 const router = express.Router();
 
-router.get('/list/:id', getAccountList)
+router.get('/list/:id', getAccountList);
 
-router.get('/add', (req, res)=>{
-    const user = req.session.userId;
-    const add = req.body.addUser;
+router.post('/add', addFriend);
 
-    // TODO: Add friend to the account
-})
+router.post('/remove', unfriend);
 
+router.get('/check/:id', checkFriend);
 
 export default router;

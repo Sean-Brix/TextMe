@@ -28,6 +28,10 @@ export default function Navigation() {
     }
   };
 
+  const peoplePage = ()=>{
+    navigate('/People');
+  }
+
   return (
 
     <div className={style.container}>
@@ -35,7 +39,7 @@ export default function Navigation() {
       <div className={style.navigation}>
 
         <img src="#" alt="o" className={style.profile}/>
-        <img src={people_icon} alt="" className={style.people_icon}/>
+        <img src={people_icon} alt="People" className={style.people_icon} onClick={peoplePage}/>
 
       </div>
 
