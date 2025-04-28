@@ -24,6 +24,17 @@ const accountSchema = new mongoose.Schema({
 
     friend_list: [{
         type: mongoose.Schema.Types.ObjectId,
+        ref: 'Account',
+        unique: true
+    }],
+
+    friend_request: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Account'
+    }],
+
+    pending_request: [{
+        type: mongoose.Schema.Types.ObjectId,
         ref: 'Account'
     }],
 

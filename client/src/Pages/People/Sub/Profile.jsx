@@ -8,8 +8,10 @@ export default function Profile({_id, username, email, profilePicture, friend_li
     const [isFriend, setIsFriend] = useState(null);
     const navigate = useNavigate();
 
+    // Session Check
     useEffect(()=>{
 
+      // 
       (async ()=>{
         const response = await fetch(`api/friends/check/${_id}`);
         const data = await response.json();
@@ -20,31 +22,20 @@ export default function Profile({_id, username, email, profilePicture, friend_li
           return;
         }
 
-        setIsFriend(data.friend);
+        // Friend State: 'true', 'false', 'pending', 'requesting
+        setIsFriend(data.request);
 
       })();
 
     }, [_id])
  
-    const addFriend = async()=>{
-        const response = await fetch('api/friends/add', {
-          method: 'POST',
-          headers:{
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            id: _id
-          })
-        });
+    const friendRequest = async()=>{
+        const response = await fetch(`api/friends/request/${_id}`, {method:'POST'});
 
         const data = await response.json();
 
-        if(data.error){
-          setIsFriend(false);
-          return
-        }
-
-        setIsFriend(true);
+        // Friend State: 'true', 'false', 'pending', 'requesting
+        setIsFriend(data.request);
     }
 
     const unfriend = async()=>{
@@ -71,6 +62,16 @@ export default function Profile({_id, username, email, profilePicture, friend_li
         setIsFriend(false);
     }
 
+    const pending = async()=>{
+      // TODO: User is currently requesting to add friend
+      setIsFriend('false')
+    }
+
+    const acceptRequest = async()=>{
+      // TODO: Other people is requesting to the user
+      setIsFriend('true');
+    }
+
   return (
     
     <div className={style.container}>
@@ -80,11 +81,17 @@ export default function Profile({_id, username, email, profilePicture, friend_li
         <h1>{createdAt}</h1>
 
         {
-          isFriend?
+          isFriend == 'pending'?
+          <button className={style.addFriend_btn} onClick={pending}>Request Pending</button>
+
+          :isFriend == 'true'?
 
           <button className={style.addFriend_btn} onClick={unfriend}>Unfriend</button>
-          :
-          <button className={style.addFriend_btn} onClick={addFriend}>Add Friend</button>
+          
+          :isFriend == 'requesting'?
+
+          <button className={style.addFriend_btn} onClick={acceptRequest}>Accept Request</button>:
+          <button className={style.addFriend_btn} onClick={friendRequest}>Add Friend</button>
         }
 
     </div>

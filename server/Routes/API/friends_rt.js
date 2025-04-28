@@ -1,12 +1,12 @@
 import express from 'express';
-import { getAccountList, addFriend, checkFriend, unfriend } from '../../Controller/friendList_ctrl.js'
+import { getAccountList, friendRequest, checkFriend, unfriend } from '../../Controller/friendList_ctrl.js'
 
 // Route: ('/api/friends')
 const router = express.Router();
 
 router.get('/list/:id', getAccountList);
 
-router.post('/add', addFriend);
+router.post('/request/:id', friendRequest);
 
 router.post('/remove', unfriend);
 
