@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import style from './People.module.css'
 import { useState, useRef } from 'react'
+import Profile from './Sub/Profile'
 
 // ICON
 import default_profile from '../../assets/userProfile.png'
@@ -79,7 +80,7 @@ export default function People() {
             }
         </div>
         
-        { selected.user && <h1>{selected.user.username}</h1> }
+        { selected.target && <Profile {...selected.user} /> }
 
     </div>
 
