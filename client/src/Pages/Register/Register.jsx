@@ -30,7 +30,7 @@ export default function Register() {
 
         setResponse(data.message);
        
-        console.log(data);
+        console.log(data.error);
 
         // Reset Inputs
         usernameRef.current.value = '';
