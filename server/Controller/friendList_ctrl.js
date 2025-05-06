@@ -1,6 +1,7 @@
 import account from '../Model/Account_Model/Account_index.js'
 import mongoose from 'mongoose'
 
+// Check if user requested to the ID
 export async function req_Exist(userID, reqID){
 
     // Get the request id
@@ -24,6 +25,7 @@ export async function req_Exist(userID, reqID){
     return false;
 }
 
+//TODO: (Get all acounts) we need to make this a friendlist only
 export async function getAccountList(req, res, next){
     try {
         const limit = req.params.id;
@@ -41,6 +43,7 @@ export async function getAccountList(req, res, next){
     }
 }
 
+// Sends a request to the user
 export async function friendRequest(req, res, next){
 
     // To pass in query as a whole
@@ -99,39 +102,66 @@ export async function friendRequest(req, res, next){
     }
 }
 
-export async function addFriend(req, res, next){
+// Remove friend request
+export async function removeRequest(req, res, next){
+
+    // To pass in query as a whole
+    const db_session = await mongoose.startSession()
+    db_session.startTransaction();
 
     try{
-
         const user = req.session.userId;
-        const add = req.body.id;
+        const reqAcc = req.params.id;
 
-        const update = await account.findByIdAndUpdate(
-            user,
-            { $push: { friend_list: add } }, 
-            { new: true }
-        );
-
-        if(!update){
-            throw new Error("Failed to update the friend list")
+        if(!(await req_Exist(user, reqAcc))){
+            await db_session.abortTransaction();
+            return res.status(409).json({
+                message: 'No current friend request',
+            })
         }
 
+        const request_status = await account.findByIdAndUpdate(
+            reqAcc, 
+            {$pull: {friend_request: user}},
+            {new: true, session: db_session}
+        );
+
+        const remove_pending = await account.findByIdAndUpdate(
+            user,
+            {$pull: {pending_request: reqAcc}},
+            {new: true, session: db_session}
+        );
+
+        if(!request_status || !remove_pending){
+            throw new Error("Failed to revoke Friend Request");
+        };
+
+        await db_session.commitTransaction();
+
+        // Friend State: 'True', 'False', 'Pending'
         res.status(201).json({
-            message: 'Friend Successfully Added to the accounts list',
-            added: true
+            message: 'Friend Request Successfully Removed',
+            request: 'false'
         })
+
     }
+
     catch(e){
-        console.log("addFriend Function Error:" + e);
+        await db_session.abortTransaction();
+
+        console.log("friendRequest function Error: " + e);
         res.status(500).json({
-            message: "Failed to update the user friend list",
-            added: false,
+            message: "Failed friend request",
+            request: 'true',
             error: e
         })
     }
-
+    finally{
+        db_session.endSession();
+    }
 }
 
+// Checks the user and ID connection
 export async function checkFriend(req, res, next){
 
     try{
@@ -184,6 +214,7 @@ export async function checkFriend(req, res, next){
 
 }
 
+// Unfriend the user
 export async function unfriend(req, res, next){
 
     try{

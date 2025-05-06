@@ -30,6 +30,9 @@ export default function Login() {
         });
 
         const data = await response.json();
+
+        console.log(data.message);
+        
         if(response.ok){
             return navigate('/Chat');
         }

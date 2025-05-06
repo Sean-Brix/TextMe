@@ -40,7 +40,7 @@ export default function Profile({ _id, username, email, profilePicture, friend_l
     };
 
     const unfriend = async () => {
-        const response = await fetch('api/friends/remove', {
+        const response = await fetch('api/friends/unfriend', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -62,9 +62,22 @@ export default function Profile({ _id, username, email, profilePicture, friend_l
         setIsFriend(false);
     };
 
-    const pending = async () => {
+    const removePending = async () => {
         // TODO: User is currently requesting to add friend
-        setIsFriend('false');
+        try{
+            const response = await fetch(`api/friends/request/remove/${_id}`, {
+                method: 'POST'
+            });
+            const data = await response.json();
+
+            if(!response.ok){
+                console.log(data.message);
+            }
+            setIsFriend(data.request);
+        }
+        catch(e){
+            console.log(e);
+        }
     };
 
     const acceptRequest = async () => {
@@ -79,7 +92,7 @@ export default function Profile({ _id, username, email, profilePicture, friend_l
             <h1>{createdAt}</h1>
 
             {isFriend == 'pending' ? (
-                <button className={style.addFriend_btn} onClick={pending}>
+                <button className={style.addFriend_btn} onClick={removePending}>
                     Request Pending
                 </button>
             ) : isFriend == 'true' ? (
