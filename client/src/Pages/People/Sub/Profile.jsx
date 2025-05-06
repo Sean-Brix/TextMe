@@ -29,7 +29,7 @@ export default function Profile({ _id, username, email, profilePicture, friend_l
     }, [_id]);
 
     const friendRequest = async () => {
-        const response = await fetch(`api/friends/request/${_id}`, {
+        const response = await fetch(`api/friends/request/send/${_id}`, {
             method: 'POST',
         });
 
@@ -63,7 +63,6 @@ export default function Profile({ _id, username, email, profilePicture, friend_l
     };
 
     const removePending = async () => {
-        // TODO: User is currently requesting to add friend
         try{
             const response = await fetch(`api/friends/request/remove/${_id}`, {
                 method: 'POST'
@@ -72,7 +71,9 @@ export default function Profile({ _id, username, email, profilePicture, friend_l
 
             if(!response.ok){
                 console.log(data.message);
+                return;
             }
+
             setIsFriend(data.request);
         }
         catch(e){
@@ -81,8 +82,23 @@ export default function Profile({ _id, username, email, profilePicture, friend_l
     };
 
     const acceptRequest = async () => {
-        // TODO: Other people is requesting to the user
-        setIsFriend('true');
+        try{ 
+            const response = await fetch(`api/friends/request/accept/${_id}`,{
+                method: 'POST'
+            })
+            const data = await response.json();
+            console.log(data);
+            if(!response.ok){
+                console.log(data.message);
+                return;
+            }
+
+            setIsFriend(data.request);
+        }
+        catch(e){
+            console.log(e);
+        }
+
     };
 
     return (

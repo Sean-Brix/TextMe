@@ -20,6 +20,11 @@ export async function req_Exist(userID, reqID){
     if (existingAccount.pending_request.includes(reqID)) {
         return true
     }
+
+    // Check if the reqID sent a request
+    if (existingAccount.friend_request.includes(reqID)) {
+        return true
+    }
     
     // No request yet
     return false;
@@ -161,6 +166,77 @@ export async function removeRequest(req, res, next){
     }
 }
 
+// Accept friend request
+export async function acceptRequest(req, res, next){
+    
+    // To pass in query as a whole
+    const db_session = await mongoose.startSession()
+    db_session.startTransaction();
+
+    try{
+        const user = req.session.userId;
+        const reqAcc = req.params.id;
+
+        if(!(await req_Exist(user, reqAcc))){
+            await db_session.abortTransaction();
+            return res.status(409).json({
+                message: 'No current friend request',
+            })
+        }
+
+        const remove_pending = await account.findByIdAndUpdate(
+            reqAcc, 
+            {$pull: {pending_request: user}},
+            {new: true, session: db_session}
+        );
+
+        const remove_request = await account.findByIdAndUpdate(
+            user,
+            {$pull: {friend_request: reqAcc}},
+            {new: true, session: db_session}
+        );
+
+        const user_add_friend = await account.findByIdAndUpdate(
+            user,
+            {$push: {friend_list: reqAcc}},
+            {new: true, session: db_session}
+        );
+
+        const req_add_friend = await account.findByIdAndUpdate(
+            reqAcc,
+            {$push: {friend_list: user}},
+            {new: true, session: db_session}
+        );
+
+        if(!remove_pending || !remove_request || !user_add_friend || !req_add_friend){
+            throw new Error("Failed to Accept Friend Request");
+        };
+
+        await db_session.commitTransaction();
+
+        // Friend State: 'True', 'False', 'Pending'
+        res.status(201).json({
+            message: 'Friend Request Successfully Accepted',
+            request: 'true'
+        })
+
+    }
+
+    catch(e){
+        await db_session.abortTransaction();
+
+        console.log("friendRequest function Error: " + e);
+        res.status(500).json({
+            message: "Failed to accept friend request",
+            request: 'requesting',
+            error: e
+        })
+    }
+    finally{
+        db_session.endSession();
+    }
+}
+
 // Checks the user and ID connection
 export async function checkFriend(req, res, next){
 
@@ -217,29 +293,50 @@ export async function checkFriend(req, res, next){
 // Unfriend the user
 export async function unfriend(req, res, next){
 
+    const db_session = await mongoose.startSession();
+    db_session.startTransaction()
+
     try{
 
         const user = req.session.userId;
-        const remove = req.body.id;
+        const reqAcc = req.body.id;
 
-        const update = await account.findByIdAndUpdate(
+
+        if(!(await account.findById(req.session.userId)).friend_list.includes(reqAcc)){
+            await db_session.abortTransaction();
+            res.status(409).json({
+                message: "Both users are not friend",
+            })
+        }
+
+        const update_user = await account.findByIdAndUpdate(
             user,
-            { $pull: { friend_list: remove } }, 
-            { new: true }
+            { $pull: { friend_list: reqAcc } }, 
+            { new: true, session: db_session }
         );
 
-        if(!update){
+        const update_req = await account.findByIdAndUpdate(
+            reqAcc,
+            { $pull: { friend_list: user } }, 
+            { new: true, session: db_session }
+        );
+
+        if(!update_user || !update_req){
             throw new Error("Failed to update the friend list")
         }
 
+        await db_session.commitTransaction();
         res.status(201).json({
             message: 'Friend Successfully removed to the accounts list',
+            request: 'false'
         })
     }
     catch(e){
+        await db_session.abortTransaction();
         console.log("unfriend Function Error:" + e);
         res.status(500).json({
             message: "Failed to update the user friend list",
+            request: 'true',
             error: e
         })
     }
