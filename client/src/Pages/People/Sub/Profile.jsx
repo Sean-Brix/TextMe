@@ -5,13 +5,10 @@ import { useNavigate } from 'react-router-dom';
 
 
 /* 
-    TODO: The first one is to make sure the current account isnt displayed on the people page and message page
     TODO: Add a section for looking all friend request sent to the current user
     TODO: Add a section to view all your current request
     TODO: Better navigation
 */ 
-
-
 
 export default function Profile({ _id, username, email, profilePicture, friend_list, createdAt,}) {
 

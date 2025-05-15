@@ -38,6 +38,11 @@ const accountSchema = new mongoose.Schema({
         ref: 'Account'
     }],
 
+    conversation: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Conversation'
+    }],
+
     createdAt: {
         type: Date,
         default: ()=> new Date(),
