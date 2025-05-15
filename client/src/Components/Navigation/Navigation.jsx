@@ -4,6 +4,7 @@ import {useNavigate} from 'react-router-dom'
 
 // ICONS
 import people_icon from '../../assets/people_icon.png'
+import message_icon from '../../assets/message_icon.png'
 
 export default function Navigation() {
 
@@ -28,10 +29,6 @@ export default function Navigation() {
     }
   };
 
-  const peoplePage = ()=>{
-    navigate('/People');
-  }
-
   return (
 
     <div className={style.container}>
@@ -39,10 +36,11 @@ export default function Navigation() {
       <div className={style.navigation}>
 
         <img src="#" alt="o" className={style.profile}/>
-        <img src={people_icon} alt="People" className={style.people_icon} onClick={peoplePage}/>
+        <img src={people_icon} alt="People" className={style.people_icon} onClick={()=> navigate('/People')}/>
 
       </div>
 
+        <img src={message_icon} alt="People" className={style.people_icon} onClick={()=> navigate('/Chat')}/>
         <button className={style.logout} onClick={logout}>Logout</button>
 
     </div>

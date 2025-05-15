@@ -9,7 +9,6 @@ import { useNavigate } from 'react-router-dom';
     TODO: Add a section for looking all friend request sent to the current user
     TODO: Add a section to view all your current request
     TODO: Better navigation
-
 */ 
 
 
