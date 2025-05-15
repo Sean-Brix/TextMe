@@ -33,12 +33,15 @@ export async function req_Exist(userID, reqID){
 //TODO: (Get all acounts) we need to make this a friendlist only
 export async function getAccountList(req, res, next){
     try {
-        const limit = req.params.id;
+        const limit = req.params.limit || 15;
 
         // Get accounts with specified limit, excluding sensitive info
-        const accounts = await account.find({}, {
-            password: 0,
-        }).limit(limit);
+        const accounts = await account.find(
+
+            { _id: { $ne : req.session.userId } }, 
+            { password: 0 }
+        
+        ).limit(limit);
 
         res.status(200).json({friendList: accounts});
 

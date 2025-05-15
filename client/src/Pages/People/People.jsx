@@ -30,7 +30,7 @@ export default function People() {
         // Fetch the list
         (async()=>{
             const response = await fetch(
-                '/api/friends/list/10',
+                `/api/users/list?limit=10&self=false`,
                 {
                     method: 'GET',
                     credentials: 'include'
@@ -38,11 +38,16 @@ export default function People() {
             );
             const data = await response.json();
 
+            if(!response.ok){
+                console.log("wrong");
+                return;
+            }
+
             // for rendering friend list
-            setList(data.friendList);
+            setList(data.account_list);
 
             setSelected({
-                user: data.friendList[0],
+                user: data.account_list[0],
                 target: prev_Selected.current
             });
         })()
