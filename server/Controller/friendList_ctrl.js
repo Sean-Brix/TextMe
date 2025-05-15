@@ -33,19 +33,24 @@ export async function req_Exist(userID, reqID){
 
 export async function getFriendList(req, res, next){
     try {
-        const limit = req.params.limit || 15;
+        const page = parseInt(req.query.page) || 1;
+        const limit = parseInt(req.query.limit) || 15;
+        const skip = (page - 1) * limit;
         const user = await account.findById(req.session.userId);
 
         // Populate the current user friend_list
         const friendList = (await user.populate({
             path: 'friend_list',
             select: '_id username email profilePicture',
-            options: {limit: parseInt(limit)}
+            options: {
+                limit: limit,
+                skip: skip
+            }
         })).friend_list
 
 
         res.status(200).json({friendList: friendList});
-        
+
     } 
     catch (error) {
         console.error('Error fetching account list:', error);

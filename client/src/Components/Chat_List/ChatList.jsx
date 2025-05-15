@@ -16,7 +16,7 @@ export default function ChatList() {
         // Fetch the list
         (async()=>{
             const response = await fetch(
-                '/api/friends/list/10',
+                '/api/friends/list?page=1&limit=10',
                 {
                     method: 'GET',
                     credentials: 'include'

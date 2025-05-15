@@ -4,8 +4,7 @@ import { getFriendList, friendRequest, checkFriend, unfriend, removeRequest, acc
 // Route: ('/api/friends')
 const router = express.Router();
 
-// TODO: convert this to getfriendlist
-router.get('/list/:limit', getFriendList);
+router.get('/list', getFriendList);
 
 router.post('/request/send/:id', friendRequest);
 
