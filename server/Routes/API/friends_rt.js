@@ -1,10 +1,11 @@
 import express from 'express';
-import { getAccountList, friendRequest, checkFriend, unfriend, removeRequest, acceptRequest } from '../../Controller/friendList_ctrl.js'
+import { getFriendList, friendRequest, checkFriend, unfriend, removeRequest, acceptRequest } from '../../Controller/friendList_ctrl.js'
 
 // Route: ('/api/friends')
 const router = express.Router();
 
-router.get('/list/:limit', getAccountList);
+// TODO: convert this to getfriendlist
+router.get('/list/:limit', getFriendList);
 
 router.post('/request/send/:id', friendRequest);
 

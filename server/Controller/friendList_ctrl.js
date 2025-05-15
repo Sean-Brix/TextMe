@@ -30,22 +30,24 @@ export async function req_Exist(userID, reqID){
     return false;
 }
 
-//TODO: (Get all acounts) we need to make this a friendlist only
-export async function getAccountList(req, res, next){
+
+export async function getFriendList(req, res, next){
     try {
         const limit = req.params.limit || 15;
+        const user = await account.findById(req.session.userId);
 
-        // Get accounts with specified limit, excluding sensitive info
-        const accounts = await account.find(
+        // Populate the current user friend_list
+        const friendList = (await user.populate({
+            path: 'friend_list',
+            select: '_id username email profilePicture',
+            options: {limit: parseInt(limit)}
+        })).friend_list
 
-            { _id: { $ne : req.session.userId } }, 
-            { password: 0 }
+
+        res.status(200).json({friendList: friendList});
         
-        ).limit(limit);
-
-        res.status(200).json({friendList: accounts});
-
-    } catch (error) {
+    } 
+    catch (error) {
         console.error('Error fetching account list:', error);
         throw error;
     }

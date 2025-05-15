@@ -65,7 +65,7 @@ export default function ChatList() {
                     </div>
                 </div>
                 
-                {friends.map((friend, index) => {
+                {!friends.length == 0 && friends.map((friend, index) => {
                     return (
                         <div 
                             onClick={e=>{messageSelect(e, friend)}} 
@@ -86,7 +86,7 @@ export default function ChatList() {
 
             </main>
             
-            { selected.user && <Chat_Box user={{ name: selected.user.username}} /> }
+            { selected.user && <Chat_Box user={{ name: selected.user.username}} /> || <h1>Walang friend - HAHAHAHA</h1>}
 
         </>
     );

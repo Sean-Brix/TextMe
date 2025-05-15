@@ -24,18 +24,20 @@ const accountSchema = new mongoose.Schema({
 
     friend_list: [{
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Account',
+        ref: 'Accounts',
         unique: true
     }],
 
     friend_request: [{
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Account'
+        ref: 'Accounts',
+        unique: true
     }],
 
     pending_request: [{
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Account'
+        ref: 'Accounts',
+        unique: true
     }],
 
     conversation: [{
