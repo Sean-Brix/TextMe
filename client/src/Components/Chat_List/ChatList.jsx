@@ -6,6 +6,16 @@ import default_profile from '../../assets/userProfile.png'
 
 export default function ChatList() {
 
+    /* 
+    
+        TODO: Friend Search API available ( '/api/friends/search?page=# &limit=# &find=# ' )
+        TODO: Make a UI for displaying multiple users when client input a query on search bar
+        TODO: Remove all friend on the chat list
+        TODO: Replace the Friend List with Convo List
+        TODO: When user clicked on a query result list, It'll be temporarily added on top of the chat list
+
+    */
+
     const [friends, setFriends] = useState([]);
     const [selected, setSelected] = useState({});
     const prev_selected = useRef(null);

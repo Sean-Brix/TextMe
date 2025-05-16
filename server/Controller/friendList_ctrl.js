@@ -30,7 +30,7 @@ export async function req_Exist(userID, reqID){
     return false;
 }
 
-
+// Return a list of friend by page
 export async function getFriendList(req, res, next){
     try {
         const page = parseInt(req.query.page) || 1;
@@ -55,6 +55,44 @@ export async function getFriendList(req, res, next){
     catch (error) {
         console.error('Error fetching account list:', error);
         throw error;
+    }
+}
+
+// Search a list of matching friends
+export async function searchFriend(req, res, next){
+
+    try {
+        const query = req.query.find || "";
+        const user = await account.findById(req.session.userId);
+    
+        // handle incremental request
+        const page = req.query.page || 1;
+        const limit = req.query.limit || 10;
+        const skip = (page - 1) * limit;
+    
+        const friendList = (await user.populate({
+            path: 'friend_list',
+            select: "username",
+            option: {
+                limit: limit,
+                skip: skip
+            }
+        })).friend_list;
+    
+        const match = friendList.filter(friend =>{
+            return friend.username.toLowerCase().startsWith(query.toLowerCase());
+        })
+    
+        res.status(200).json({
+            result: match
+        });
+    } 
+    catch (error) {
+        console.error('Error searching friends:', error);
+        res.status(500).json({
+            message: 'searchFriend(): Failed to search friends',
+            error: error.message
+        });
     }
 }
 
