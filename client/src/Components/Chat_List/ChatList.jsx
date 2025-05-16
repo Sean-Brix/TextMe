@@ -12,8 +12,7 @@ export default function ChatList() {
     
     *   DONE: Friend Search API / Search Algorithm ( '/api/friends/search?page=# &limit=# &find=# ' )
     *   DONE: Make a UI for displaying multiple users when client input a query on search bar
-        TODO: Remove all friend on the chat list & Replace it with a Convo List
-        TODO: When user clicked on a query result list, It'll be temporarily added on top of the chat list
+        TODO: Remove all friend on the chat list & Replace it with a Convo List ( CHAT BOX TICKET )
 
     */
 

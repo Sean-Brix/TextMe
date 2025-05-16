@@ -2,6 +2,18 @@ import React, { useEffect, useState } from 'react';
 import style from './Search_List.module.css';
 
 export default function Search_List({ find }) {
+    
+    /*  
+    ?   TICKET: Clickable User & Opening a new Conversation
+    
+    TODO: Create a functional conversation box ( CHAT BOX TICKET )
+    TODO: When user clicked on a query result list, It'll be temporarily added on top of the chat list
+    TODO: The clicked user will become a new convo with messages
+    TODO: if user sent a message, save the convo to the list otherwise remove it from the list
+
+
+    */
+
     const [friendlist, setFriendList] = useState([]);
     const [debouncedFind, setDebouncedFind] = useState(find);
 
