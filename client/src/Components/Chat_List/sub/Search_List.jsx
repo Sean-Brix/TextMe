@@ -5,18 +5,20 @@ export default function Search_List({ find }) {
     const [friendlist, setFriendList] = useState([]);
     const [debouncedFind, setDebouncedFind] = useState(find);
 
-    // Debounce effect: update debouncedFind 300ms after user stops typing
+    // Debounce effect: Delay the request for 500ms, if input change it cancels the timeout callback
     useEffect(() => {
 
+        // Setting a function to callback after 500ms
         const handler = setTimeout(() => {
-            console.log(find);
             setDebouncedFind(find);
         }, 500);
 
-        return () => clearTimeout(handler); // cleanup if find changes within 300ms
+        // If 'find' change causing new useEffect, it'll cancel the last callback
+        return () => clearTimeout(handler);
 
     }, [find]);
 
+    // Request the Search List
     useEffect(() => {
         if (!debouncedFind || debouncedFind.trim().length === 0) {
             setFriendList([]);
