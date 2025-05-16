@@ -11,7 +11,7 @@ export default function Search_List({ find }) {
         // Setting a function to callback after 500ms
         const handler = setTimeout(() => {
             setDebouncedFind(find);
-        }, 500);
+        }, 300);
 
         // If 'find' change causing new useEffect, it'll cancel the last callback
         return () => clearTimeout(handler);
@@ -48,7 +48,8 @@ export default function Search_List({ find }) {
             {friendlist.map((item, index) => (
 
                 <div key={index} className={style.friend_container}>
-                    <h1>{item.username}</h1>
+                    <h2>{item.username.toUpperCase()}</h2>
+                    <p>{item._id.toUpperCase()}</p>
                 </div>
 
             ))}

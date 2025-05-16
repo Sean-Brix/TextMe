@@ -11,9 +11,16 @@
     flex-direction: column;
     align-items: center;
 
+    box-sizing: border-box;
+    
     overflow-y: auto;
     overflow-x: hidden;
-    box-sizing: border-box;
+    overflow: auto;
+    scrollbar-width: none; 
+    -ms-overflow-style: none;  
+}
+.container::-webkit-scrollbar {
+  display: none; 
 }
 
 /* HEADER PART */
@@ -97,7 +104,6 @@
     cursor: pointer;
 }
 
-
 .friend_name{
     margin: 0;
     font-size: 1.5rem;
@@ -147,33 +153,6 @@
         }
         p{
             transition: 1s ease-in;
-        }
-    }
-}
-.selected_friend:hover{
-    width: 88%;
-    border-radius: 15px;
-    cursor: pointer;
-    display: flex;
-    flex-direction: row;
-    justify-content: start;
-    align-items: center;
-    background-color: rgb(107, 229, 223);
-
-    img{
-        display: flex;
-        width: 35px;
-        height: 35px;
-    }
-    div{
-        display: flex;
-        width: 100%;
-        flex-direction: column;
-        justify-content: center;
-        align-items: start;
-
-        h1{
-            width: 100%;
         }
     }
 }

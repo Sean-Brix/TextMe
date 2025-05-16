@@ -1,15 +1,15 @@
 .search_list{
     position: absolute;
 
-    width: 117.8%;
+    width: auto;
     height: auto;
-    max-height: 64.4vh;
-    background-color: red;
-
+    max-height: 80vh;
     box-sizing: border-box;
+    border-bottom: 2px solid black;
+    border-top: 2px solid black;
 
     z-index: 100;
-    left: -27px;
+    left: -19px;
     top: 40px;
 
     overflow: auto;
@@ -21,14 +21,30 @@
 }
 
 .friend_container{
-    width: 80%;
-    height: 100px;
+    width: 330px;
+    height: 85px;
+    padding: 0;
+    margin: 0;
     border: 2px solid black;
+    
+    font-family: var(--font-family-head);
 
     display: flex;
     flex-direction: column;
-    background-color: yellow;
-    z-index: 1000;
-    overflow: auto;
+    justify-content: center;
+    align-items: center;
 
+    background-color: rgb(130, 255, 182);
+    z-index: 1000;
+    overflow: hidden;
+    cursor: pointer;
+
+    h2, p{
+        margin: 0px;
+        cursor: pointer;
+    }
+}
+
+.friend_container:hover{
+    background-color: rgb(179, 255, 212);
 }

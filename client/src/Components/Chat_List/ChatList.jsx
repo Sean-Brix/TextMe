@@ -11,7 +11,7 @@ export default function ChatList() {
     ?   TICKET: Functional Search Bar for Chat List
     
     *   DONE: Friend Search API / Search Algorithm ( '/api/friends/search?page=# &limit=# &find=# ' )
-        TODO: Make a UI for displaying multiple users when client input a query on search bar
+    *   DONE: Make a UI for displaying multiple users when client input a query on search bar
         TODO: Remove all friend on the chat list & Replace it with a Convo List
         TODO: When user clicked on a query result list, It'll be temporarily added on top of the chat list
 
@@ -71,7 +71,14 @@ export default function ChatList() {
                     <h1>Messages</h1>
                     <div className={style.search_container}>
                         <img src={search_icon} alt="search" className={style.search_icon}/>
-                        <input type="text" placeholder="Search Messages" className={style.search_messages} onChange={e=>setSearch(e.target.value)}/>
+                        <input 
+                            type="text" 
+                            placeholder="Search Messages" 
+                            className={style.search_messages} 
+                            onChange={e=>setSearch(e.target.value)} 
+                            onBlur={()=>setSearch("")}
+                            onFocus={e=>setSearch(e.target.value)}
+                        />
                         <div className={style.search_list}>
                             <Search_List find={search}/>
                         </div>
