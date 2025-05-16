@@ -67,7 +67,7 @@ export async function searchFriend(req, res, next){
     
         // handle incremental request
         const page = req.query.page || 1;
-        const limit = req.query.limit || 10;
+        const limit = req.query.limit || 0;
         const skip = (page - 1) * limit;
     
         const friendList = (await user.populate({

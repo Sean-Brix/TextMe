@@ -1,21 +1,26 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef } from 'react'
 import search_icon from '../../assets/search.png'
-import style from './ChatList.module.css';
-import Chat_Box from '../../Components/Chat_Box/Chat_Box';
+import style from './ChatList.module.css'
+import Chat_Box from '../../Components/Chat_Box/Chat_Box'
 import default_profile from '../../assets/userProfile.png'
+import Search_List from './sub/search_list.jsx'
 
 export default function ChatList() {
 
-    /* 
+    /*  
+    ?   TICKET: Functional Search Bar for Chat List
     
-        TODO: Friend Search API available ( '/api/friends/search?page=# &limit=# &find=# ' )
+    *   DONE: Friend Search API / Search Algorithm ( '/api/friends/search?page=# &limit=# &find=# ' )
         TODO: Make a UI for displaying multiple users when client input a query on search bar
-        TODO: Remove all friend on the chat list
-        TODO: Replace the Friend List with Convo List
+        TODO: Remove all friend on the chat list & Replace it with a Convo List
         TODO: When user clicked on a query result list, It'll be temporarily added on top of the chat list
 
     */
 
+    // Search Function
+    const [search, setSearch] = useState("");
+
+    // Holds User Render
     const [friends, setFriends] = useState([]);
     const [selected, setSelected] = useState({});
     const prev_selected = useRef(null);
@@ -25,13 +30,7 @@ export default function ChatList() {
 
         // Fetch the list
         (async()=>{
-            const response = await fetch(
-                '/api/friends/list?page=1&limit=10',
-                {
-                    method: 'GET',
-                    credentials: 'include'
-                }
-            );
+            const response = await fetch('/api/friends/list?page=1&limit=10');
             const data = await response.json();
 
             // for rendering friend list
@@ -40,12 +39,12 @@ export default function ChatList() {
             // Set initial selected user
             setSelected({
                 user: data.friendList[0],
-                target: prev_selected.current
+                target: prev_selected.current,
             });
         })()
 
     }, [])
-    
+
 
     // USER SELECTION
     const messageSelect = (event, user)=>{
@@ -65,13 +64,18 @@ export default function ChatList() {
 
     return (
         <>
+
             <main className={style.container}>
 
                 <div className={style.header}>
                     <h1>Messages</h1>
                     <div className={style.search_container}>
                         <img src={search_icon} alt="search" className={style.search_icon}/>
-                        <input type="text" placeholder="Search Messages" className={style.search_messages}/>
+                        <input type="text" placeholder="Search Messages" className={style.search_messages} onChange={e=>setSearch(e.target.value)}/>
+                        <div className={style.search_list}>
+                            <Search_List find={search}/>
+                        </div>
+                    
                     </div>
                 </div>
                 
