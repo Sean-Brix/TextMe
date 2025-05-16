@@ -1,4 +1,4 @@
-# 💬 Chat App
+# 💬 TextMe
 
 A real-time chat application built with **React**, **Node.js**, and **Socket.IO**. Designed for instant messaging with a smooth user experience, responsive design, and modern UI.
 
