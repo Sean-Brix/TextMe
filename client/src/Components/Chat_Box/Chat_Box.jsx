@@ -21,8 +21,15 @@ export default function Chat_Box({user}) {
 
   useEffect(()=>{
     
-    // TODO: Fetch for request (Send get request to load all existing messages)
-    // TODO: user props will contain all the details of the person to message such as name and account ID
+    /*
+    ?   TICKET: Functional Chat Box (Sending/Retrieving of message etc..)
+
+        TODO: Open a global connection to a Socket(TCP) for realtime server connections
+        TODO: Open a chat service connection(Local) to a room or create a room
+        TODO: Configure handshake to passed in authentication and Metadatas (Feature/Theme etc)
+        TODO: Request for all existing messages if there is any.
+        TODO: Handle all message retrieval and sending 
+    */
 
     // Get the scoll to the bottom
     scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
@@ -59,6 +66,7 @@ export default function Chat_Box({user}) {
         </header>
 
         <main className={style.chat_box} ref={scrollRef}>
+
           <Message sender={{'name':'current'}} message="This is a sample message from the client"/>
           <Message sender={{'name':'other'}} message="Another message but from other people, i made this elongated to see how text will react on lengthy messages and it looks good so far, it shouldnt be a problem then."/>
           <Message sender={{'name':'current'}} message="Try a little one"/>
@@ -66,6 +74,7 @@ export default function Chat_Box({user}) {
           <Message sender={{'name':'other'}} message="Why do you care so much"/>
           <Message sender={{'name':'other'}} message="That you even have the time to read these messages"/>
           <Message sender={{'name':'current'}} message="Well im bored, i got nothing else to do so leave me be"/>
+
         </main>
 
         <div className={style.input_div}>

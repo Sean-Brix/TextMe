@@ -1,7 +1,5 @@
 import cookieParser from 'cookie-parser';
 import express, { urlencoded } from 'express';
-import session from 'express-session';
-import store from 'connect-mongo';
 import dotenv from 'dotenv';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -20,24 +18,7 @@ const app = express();
 app.use(urlencoded({ extended: false }));
 app.use(express.json());
 app.use(cookieParser());
-app.use(
-    session({
-        store: store.create({
-            mongoUrl: DB_URI,
-            collectionName: 'sessions',
-        }),
 
-        secret: SKEY,
-        resave: false,
-        saveUninitialized: false,
-        cookie: {
-            secure: process.env.NODE_ENV === 'production'? true : false,
-            maxAge: 1000 * 60 * 60 * 24, // 24 hours
-            httpOnly: true,
-            sameSite: "Lax"
-        },
-    })
-);
 app.use(cors({
     origin: 'http://localhost:5173',
     methods: ['POST', 'GET'],

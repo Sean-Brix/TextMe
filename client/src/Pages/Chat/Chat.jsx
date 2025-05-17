@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import Navigation from '../../Components/Navigation/Navigation';
 import style from './Chat.module.css';
 import ChatList from '../../Components/Chat_List/ChatList';
-import SessionCheck from '../../Components/Authentication/SessionCheck';
+import authorize_token from '../../Authentication/authorize_token.js';
 import { useNavigate } from 'react-router-dom';
 
 export default function Chat() {
@@ -12,14 +12,13 @@ export default function Chat() {
     // Authenticate
     useEffect(() => {
 
-        const fetchData = async () => {
-            const authentication = await SessionCheck();
+        (async () => {
+            const authentication = await authorize_token();
             if (!authentication) {
                 navigate('/');
                 return;
             }
-        };
-        fetchData();
+        })();
 
         return;
 

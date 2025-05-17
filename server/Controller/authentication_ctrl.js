@@ -1,7 +1,12 @@
 import bcrypt from 'bcrypt'
 import account from '../Model/Account_Model/Account_index.js'
+import jwt from 'jsonwebtoken'
+import dotenv from 'dotenv'
+
+dotenv.config();
 
 export async function login(req, res, next) {
+
     
     try {
         const { username, password } = req.body;
@@ -18,29 +23,27 @@ export async function login(req, res, next) {
             return res.status(400).json({ message: "Invalid credentials" });
         }
 
-        // store user session
-        req.session.userId = user._id;
-        req.session.username = user.username;
+        // Generate a Token
+        const token = jwt.sign(
+            { ID: user._id, username: user.username }, 
+            process.env.SECRET_ACCESS_KEY, 
+            { expiresIn: "1h" }
+        );
         
-        req.session.save((err)=>{
-            if(err){
-                return res.status(500).json({
-                    error: err
-                })
-            }
+        res.cookie('token', token, {
 
-            // successful login
-            return res.status(200).json({
-                message: "Login successful",
-                user: {
-                    id: user._id,
-                    username: user.username
-                }
-            });
+            secure: process.env.NODE_ENV === 'production'? true : false,
+            maxAge: 1000 * 60 * 60, // 1 hour
+            httpOnly: true,
+            sameSite: "Lax"
 
         })
+        
+        res.status(200).json({
+            message: "log in successful"
+        })
 
-    } 
+    }
     
     catch (error) {
         return res.status(500).json({ error: error.message });
@@ -90,42 +93,70 @@ export async function register(req, res, next) {
     }
 }
 
-export async function sessionDestroy(req, res ,next){
-    req.session.destroy((err)=>{
-
-        if (err) {
-            console.error('Failed to destroy session:', err);
-            return res.status(500).json({
-                message: "Server Error, Could not logout"
-            });
-        }
-
-        res.clearCookie('connect.sid');
-        res.status(200).json({
-        message: "Session Destroyed"
-        })
-
-    });
-}
-
-export async function session_check(req, res, next){
-
+export async function tokenDestroy(req, res ,next){
     try{
-        if(req.session.userId){
-            return res.status(200).json({
-                authenticated: true
-            })
-        }
+
+        res.clearCookie('token', token, {
+            
+            secure: process.env.NODE_ENV === 'production'? true : false,
+            httpOnly: true,
+            sameSite: "Lax"
+            
+        })
+        res.status(200).json({
+            message: "Cookie Destroyed"
+        })
         
-        res.status(401).json({
-            authenticated: false
+    }
+
+    catch(e){
+        res.status(500).json({
+            message: "Server Error on Cookie Destroy"
         })
     }
-    catch(err){
-        console.log("Session Check Error: " + err);
-        res.status(500).json({
-            error: err
-        })
+
+}
+
+export async function checkAuth(req, res, next){
+
+    const token = req.cookies.token;
+
+    if (!token) return res.status(403).json({ authentication: false });
+
+    try {
+
+        jwt.verify(token, process.env.SECRET_ACCESS_KEY);
+
+        return res.status(200).json({ authentication: true });
+
+    } 
+
+    catch (err) {
+
+        return res.status(403).json({ authentication: false });
+
+    }
+    
+}
+
+export async function verifyToken(req, res, next){
+
+    const token = req.cookies.token;
+
+    if (!token) return res.sendStatus(401);
+
+    try {
+
+        const decoded = jwt.verify(token, process.env.SECRET_ACCESS_KEY);
+        req.user = decoded;
+
+        next();
+    } 
+
+    catch (err) {
+
+        return res.status(403).json({ message: 'Invalid token' });
+
     }
     
 }

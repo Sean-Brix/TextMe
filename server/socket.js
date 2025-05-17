@@ -8,7 +8,7 @@ const io = new Server(server);
 io.on('connection', socket =>{
     
     /*
-        TODO: Create a logic for handshake, separate services in their own socket files
+        TODO: Create a authentication logic for handshake, separate services in their own socket files
         Sample Handshake
 
             const { username, id } = socket.handshake.auth;

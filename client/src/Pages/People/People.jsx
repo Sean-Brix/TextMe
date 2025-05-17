@@ -3,7 +3,7 @@ import style from './People.module.css'
 import { useState, useRef } from 'react'
 import Profile from './Sub/Profile'
 import { useNavigate } from 'react-router-dom';
-import SessionCheck from '../../Components/Authentication/SessionCheck';
+import authorize_token from '../../Authentication/authorize_token';
 import Navigation from '../../Components/Navigation/Navigation.jsx'
 
 // ICON
@@ -18,17 +18,16 @@ export default function People() {
 
     useEffect(()=>{
 
+
         // SESSION CHECK
         (async () => {
-            const authentication = await SessionCheck();
+            const authentication = await authorize_token();
+
             if (!authentication) {
                 navigate('/');
                 return;
             }
-        })();
-
-        // Fetch the list
-        (async()=>{
+        
             const response = await fetch(
                 `/api/users/list?limit=10&self=false`,
                 {

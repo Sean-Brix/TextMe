@@ -1,9 +1,11 @@
 import React, { useEffect, useState, useRef } from 'react'
+import { useNavigate } from 'react-router-dom';
 import search_icon from '../../assets/search.png'
 import style from './ChatList.module.css'
 import Chat_Box from '../../Components/Chat_Box/Chat_Box'
 import default_profile from '../../assets/userProfile.png'
 import Search_List from './sub/search_list.jsx'
+import authorize_token from '../../Authentication/authorize_token.js'
 
 export default function ChatList() {
 
@@ -23,12 +25,21 @@ export default function ChatList() {
     const [friends, setFriends] = useState([]);
     const [selected, setSelected] = useState({});
     const prev_selected = useRef(null);
+    const navigate = useNavigate();
 
     // INITIAL SETUP
     useEffect(()=>{
 
         // Fetch the list
         (async()=>{
+
+            const authentication = await authorize_token();
+            
+            if (!authentication) {
+                navigate('/');
+                return;
+            }
+
             const response = await fetch('/api/friends/list?page=1&limit=10');
             const data = await response.json();
 

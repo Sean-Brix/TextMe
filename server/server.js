@@ -11,7 +11,7 @@ const PORT = process.env.PORT || 3000;
 const DB_URI = process.env.MONGO_URI;
 
 // Database
-mongoose.connect(DB_URI);
+mongoose.connect(DB_URI, {autoIndex: false});
 
 // Server
 const server = http.createServer(app);
