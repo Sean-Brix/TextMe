@@ -21,7 +21,7 @@ export async function get_users(req, res, next){
             
             accounts = await account.find(
                 
-                { _id: { $ne: req.session.userId } }, 
+                { _id: { $ne: req.user.ID } }, 
                 { password: 0 }
                 
             ).limit(limit);

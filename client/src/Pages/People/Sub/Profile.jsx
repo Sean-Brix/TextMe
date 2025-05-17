@@ -92,7 +92,6 @@ export default function Profile({ _id, username, email, profilePicture, friend_l
                 method: 'POST'
             })
             const data = await response.json();
-            console.log(data);
             if(!response.ok){
                 console.log(data.message);
                 return;

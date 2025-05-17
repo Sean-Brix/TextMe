@@ -36,7 +36,7 @@ export async function getFriendList(req, res, next){
         const page = parseInt(req.query.page) || 1;
         const limit = parseInt(req.query.limit) || 15;
         const skip = (page - 1) * limit;
-        const user = await account.findById(req.session.userId);
+        const user = await account.findById(req.user.ID);
 
         // Populate the current user friend_list
         const friendList = (await user.populate({
@@ -63,7 +63,7 @@ export async function searchFriend(req, res, next){
 
     try {
         const query = req.query.find || "";
-        const user = await account.findById(req.session.userId);
+        const user = await account.findById(req.user.ID);
     
         // handle incremental request
         const page = req.query.page || 1;
@@ -104,7 +104,7 @@ export async function friendRequest(req, res, next){
     db_session.startTransaction();
 
     try{
-        const user = req.session.userId;
+        const user = req.user.ID;
         const reqAcc = req.params.id;
 
         if(await req_Exist(user, reqAcc)){
@@ -163,7 +163,7 @@ export async function removeRequest(req, res, next){
     db_session.startTransaction();
 
     try{
-        const user = req.session.userId;
+        const user = req.user.ID;
         const reqAcc = req.params.id;
 
         if(!(await req_Exist(user, reqAcc))){
@@ -222,7 +222,7 @@ export async function acceptRequest(req, res, next){
     db_session.startTransaction();
 
     try{
-        const user = req.session.userId;
+        const user = req.user.ID;
         const reqAcc = req.params.id;
 
         if(!(await req_Exist(user, reqAcc))){
@@ -290,7 +290,7 @@ export async function checkFriend(req, res, next){
 
     try{
         // Retrieve user document
-        const user = await account.findById(req.session.userId);
+        const user = await account.findById(req.user.ID);
         const check = req.params.id;
 
         // Checks if the user has connection with this id
@@ -346,11 +346,11 @@ export async function unfriend(req, res, next){
 
     try{
 
-        const user = req.session.userId;
+        const user = req.user.ID;
         const reqAcc = req.body.id;
 
 
-        if(!(await account.findById(req.session.userId)).friend_list.includes(reqAcc)){
+        if(!(await account.findById(user)).friend_list.includes(reqAcc)){
             await db_session.abortTransaction();
             res.status(409).json({
                 message: "Both users are not friend",

@@ -25,9 +25,9 @@ export async function login(req, res, next) {
 
         // Generate a Token
         const token = jwt.sign(
-            { ID: user._id, username: user.username }, 
-            process.env.SECRET_ACCESS_KEY, 
-            { expiresIn: "1h" }
+            { ID: user._id, username: user.username },  // PAYLOAD
+            process.env.SECRET_ACCESS_KEY,              // SIGNITURE
+            { expiresIn: "1h" }                         // HEADER (OPTIONS)
         );
         
         res.cookie('token', token, {
@@ -48,6 +48,28 @@ export async function login(req, res, next) {
     catch (error) {
         return res.status(500).json({ error: error.message });
     }
+}
+
+export async function verifyToken(req, res, next){
+
+    const token = req.cookies.token;
+
+    if (!token) return res.sendStatus(401);
+
+    try {
+
+        const decoded = jwt.verify(token, process.env.SECRET_ACCESS_KEY);
+        req.user = decoded;
+
+        next();
+    } 
+
+    catch (err) {
+
+        return res.status(403).json({ message: 'Invalid token' });
+
+    }
+    
 }
 
 export async function register(req, res, next) {
@@ -96,7 +118,7 @@ export async function register(req, res, next) {
 export async function tokenDestroy(req, res ,next){
     try{
 
-        res.clearCookie('token', token, {
+        res.clearCookie('token', {
             
             secure: process.env.NODE_ENV === 'production'? true : false,
             httpOnly: true,
@@ -139,24 +161,4 @@ export async function checkAuth(req, res, next){
     
 }
 
-export async function verifyToken(req, res, next){
 
-    const token = req.cookies.token;
-
-    if (!token) return res.sendStatus(401);
-
-    try {
-
-        const decoded = jwt.verify(token, process.env.SECRET_ACCESS_KEY);
-        req.user = decoded;
-
-        next();
-    } 
-
-    catch (err) {
-
-        return res.status(403).json({ message: 'Invalid token' });
-
-    }
-    
-}
