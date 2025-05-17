@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import style from './Login.module.css';
 import { Link, useNavigate } from 'react-router-dom';
+import authorize_token from '../../Authentication/authorize_token.js'
 
 export default function Login() {
     const usernameRef = useRef();
@@ -8,8 +9,19 @@ export default function Login() {
     const hasRun = useRef(false);
     const navigate = useNavigate();
 
+    useEffect(()=>{
+
+        (async ()=>{
+            if(await authorize_token()){
+                navigate('/chat');
+            }
+        })()
+
+    });
+
     const submitForm = async (e) => {
         e.preventDefault();
+
 
         if(hasRun.current) return;
         hasRun.current = true;
@@ -36,7 +48,7 @@ export default function Login() {
         }
 
         console.log(data);
-        
+
         hasRun.current = false;
 
         // Reset Inputs

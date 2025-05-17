@@ -9,8 +9,6 @@ import cors from 'cors'
 dotenv.config();
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-const DB_URI = process.env.MONGO_URI;
-const SKEY = process.env.SESSION_KEY || '----';
 
 // Request Handler
 const app = express();

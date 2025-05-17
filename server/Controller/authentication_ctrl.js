@@ -23,10 +23,10 @@ export async function login(req, res, next) {
             return res.status(400).json({ message: "Invalid credentials" });
         }
 
-        // Generate a Token
+        // Generate a Token (SIGNITURE)
         const token = jwt.sign(
             { ID: user._id, username: user.username },  // PAYLOAD
-            process.env.SECRET_ACCESS_KEY,              // SIGNITURE
+            process.env.SECRET_ACCESS_KEY,              // SECRET KEY
             { expiresIn: "1h" }                         // HEADER (OPTIONS)
         );
         

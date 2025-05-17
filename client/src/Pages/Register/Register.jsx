@@ -7,6 +7,24 @@ export default function Register() {
     const passwordRef = useRef();
     const emailRef = useRef();
     const [response, setResponse] = useState('');
+    const navigate = useNavigate();
+
+    useEffect(()=>{
+
+        (async ()=>{
+            const response = await fetch('/auth/logout');
+            const data = await response.json();
+            
+            if (response.ok) {
+                navigate('/register');
+                return;
+            } 
+
+            alert(data.message || 'Logout failed');
+            navigate('/chat');
+        })()
+
+    });
 
     const submitForm = async (e) => {
         e.preventDefault();
