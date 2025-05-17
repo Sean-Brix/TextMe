@@ -20,7 +20,7 @@ A real-time chat application built with **React**, **Node.js**, and **Socket.IO*
 
 **Frontend:**
 - React
-- CSS Modules / Tailwind / SCSS (depending on your choice)
+- CSS Modules / Tailwind / SCSS
 - Axios
 - Socket.IO-client
 

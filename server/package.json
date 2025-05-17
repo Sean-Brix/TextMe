@@ -16,6 +16,7 @@
     "http": "^0.0.1-security",
     "mongodb": "^6.15.0",
     "mongoose": "^8.13.2",
-    "nodemon": "^3.1.9"
+    "nodemon": "^3.1.9",
+    "socket.io": "^4.8.1"
   }
 }

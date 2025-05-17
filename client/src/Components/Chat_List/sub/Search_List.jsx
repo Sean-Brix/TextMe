@@ -11,7 +11,6 @@ export default function Search_List({ find }) {
     TODO: The clicked user will become a new convo with messages
     TODO: if user sent a message, save the convo to the list otherwise remove it from the list
 
-
     */
 
     const [friendlist, setFriendList] = useState([]);
