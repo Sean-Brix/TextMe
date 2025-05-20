@@ -6,6 +6,15 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+
+    h1{
+        font-family: var(--font-family-head);
+    }
+    h1:hover{
+        color: rgb(2, 69, 202);
+        font-style: italic;
+        cursor: pointer;
+    }
 }
 
 .addFriend_btn{
@@ -20,6 +29,7 @@
 .addFriend_btn:hover{
     background-color: rgb(140, 220, 178);
     transform: scale(1.02);
+    border: 1px solid rgb(0, 180, 81);
 }
 .addFriend_btn:active{
     border: 2px solid black;

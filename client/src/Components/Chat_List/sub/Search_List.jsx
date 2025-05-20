@@ -53,6 +53,7 @@ export default function Search_List({ find }) {
 
     }, [debouncedFind]);
 
+
     return (
         <div className={style.search_list}>
 
@@ -67,4 +68,5 @@ export default function Search_List({ find }) {
 
         </div>
     );
+    
 }

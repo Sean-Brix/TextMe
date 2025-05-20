@@ -73,7 +73,6 @@ export default function Chat_Box({user}) {
           <Message sender={{'name':'current'}} message="Imma try a longer one on this side to make sure both side are good enough to handle big stuff."/>
           <Message sender={{'name':'other'}} message="Why do you care so much"/>
           <Message sender={{'name':'other'}} message="That you even have the time to read these messages"/>
-          <Message sender={{'name':'current'}} message="Well im bored, i got nothing else to do so leave me be"/>
 
         </main>
 
@@ -84,7 +83,9 @@ export default function Chat_Box({user}) {
 
             <input type="text" placeholder='Aa' className={style.user_input} ref={messageRef}/>
             <img src={send_icon} alt="Send" className={style.send_icon}/>
+
         </div>
+        
     </div>
   )
 }
