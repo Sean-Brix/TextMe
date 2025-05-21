@@ -20,3 +20,4 @@ router.post('/unfriend', unfriend);
 router.get('/check/:id', checkFriend);
 
 export default router;
+

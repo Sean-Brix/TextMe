@@ -10,3 +10,4 @@ router.get('/logout', tokenDestroy);
 router.get('/check', checkAuth);
 
 export default router;
+

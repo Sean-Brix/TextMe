@@ -15,7 +15,6 @@ io.on('connection', socket =>{
             const { feature, theme } = socket.handshake.query;
 
     */
-
     // TODO: Only one feature per connection
     
     chat_handler(socket);

@@ -1,6 +1,7 @@
 import React,{useEffect, useRef} from 'react'
 import style from './Chat_Box.module.css'
 import { Link } from 'react-router-dom'
+import socket from "../../Sockets/chat_sc.js"
 
 // Components
 import Message from '../Message/Message.jsx'
@@ -30,10 +31,18 @@ export default function Chat_Box({user}) {
         TODO: Request for all existing messages if there is any.
         TODO: Handle all message retrieval and sending 
     */
+   console.log("Hello");
+
+    socket.on("connect", ()=>{
+      console.log("User Connected to Socket");
+    })
 
     // Get the scoll to the bottom
     scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
 
+    return () => {
+      socket.off("connect", ()=>{console.log("User Connected to Socket");});
+    };
   }, [])
 
 
