@@ -75,6 +75,8 @@ export default function ChatList() {
             console.log("User Connected to Socket");
         })
 
+        socket.emit("send", "sample data");
+
         return () => {
             socket.off("connect", ()=>{
                 console.log("User Connected to Socket");

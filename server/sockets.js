@@ -1,6 +1,7 @@
 import jwt from 'jsonwebtoken'
 import dotenv from 'dotenv'
 import { parse } from 'cookie'
+import chat_socket from './Sockets/chat_io.js'
 
 /*
 
@@ -10,9 +11,7 @@ import { parse } from 'cookie'
     const { username, id } = socket.handshake.auth;
     const { feature, theme } = socket.handshake.query;
 
-    TODO: Only one feature per connection
-    chat_handler(socket);
-    analytics_handler(socket);
+    
 
 */
 
@@ -23,7 +22,7 @@ function setup_socket(io){
     io.on('connection', socket =>{
         try {
             
-
+            // AUTHENTICATION
             const token = parse(socket.handshake.headers.cookie).token;
             const secret = process.env.SECRET_ACCESS_KEY
 
@@ -35,8 +34,12 @@ function setup_socket(io){
             const decoded = jwt.verify(token, secret);
             socket.user = decoded;
 
-            console.log(socket.user);
+            
+        //  TODO: Only one feature per connection
+        //  chat_handler(socket);
+        //  analytics_handler(socket);
 
+            chat_socket(socket, io);
         } 
         catch (error) {
             socket.disconnect();
