@@ -1,7 +1,6 @@
 import React,{useEffect, useRef} from 'react'
 import style from './Chat_Box.module.css'
 import { Link } from 'react-router-dom'
-import socket from "../../Sockets/chat_sc.js"
 
 // Components
 import Message from '../Message/Message.jsx'
@@ -19,32 +18,6 @@ export default function Chat_Box({user}) {
 
   const scrollRef = useRef(null);
   const messageRef = useRef('');
-
-  useEffect(()=>{
-    
-    /*
-    ?   TICKET: Functional Chat Box (Sending/Retrieving of message etc..)
-
-        TODO: Open a global connection to a Socket(TCP) for realtime server connections
-        TODO: Open a chat service connection(Local) to a room or create a room
-        TODO: Configure handshake to passed in authentication and Metadatas (Feature/Theme etc)
-        TODO: Request for all existing messages if there is any.
-        TODO: Handle all message retrieval and sending 
-    */
-   console.log("Hello");
-
-    socket.on("connect", ()=>{
-      console.log("User Connected to Socket");
-    })
-
-    // Get the scoll to the bottom
-    scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
-
-    return () => {
-      socket.off("connect", ()=>{console.log("User Connected to Socket");});
-    };
-  }, [])
-
 
   return (
     <div className={style.container}>

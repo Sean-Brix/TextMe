@@ -6,6 +6,7 @@ import Chat_Box from '../../Components/Chat_Box/Chat_Box'
 import default_profile from '../../assets/userProfile.png'
 import Search_List from './sub/search_list.jsx'
 import authorize_token from '../../Authentication/authorize_token.js'
+import socket from "../../Sockets/socket.js"
 
 export default function ChatList() {
 
@@ -54,6 +55,31 @@ export default function ChatList() {
         })()
 
     }, [])
+
+    
+    useEffect(()=>{
+        
+        /*
+        ?   TICKET: Functional Chat Box (Sending/Retrieving of message etc..)
+
+            TODO: Open a global connection to a Socket(TCP) for realtime server connections
+            TODO: Open a chat service connection(Local) to a room or create a room
+            TODO: Configure handshake to passed in authentication and Metadatas (Feature/Theme etc)
+            TODO: Request for all existing messages if there is any.
+            TODO: Handle all message retrieval and sending 
+        */
+
+        socket.on("connect", ()=>{
+            console.log("User Connected to Socket");
+        })
+
+        return () => {
+            socket.off("connect", ()=>{
+                console.log("User Connected to Socket");
+            });
+        };
+    }, [socket])
+
 
 
     // USER SELECTION
