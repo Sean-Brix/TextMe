@@ -69,6 +69,8 @@ export default function ChatList() {
             TODO: Handle all message retrieval and sending 
         */
 
+        socket.connect();
+
         socket.on("connect", ()=>{
             console.log("User Connected to Socket");
         })
@@ -77,7 +79,9 @@ export default function ChatList() {
             socket.off("connect", ()=>{
                 console.log("User Connected to Socket");
             });
+            socket.disconnect();
         };
+
     }, [selected])
 
 
