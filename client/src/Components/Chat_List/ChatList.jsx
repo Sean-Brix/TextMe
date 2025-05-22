@@ -78,7 +78,7 @@ export default function ChatList() {
                 console.log("User Connected to Socket");
             });
         };
-    }, [socket])
+    }, [selected])
 
 
 

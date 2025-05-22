@@ -2,6 +2,9 @@
 function setup_socket(io){
 
     io.on('connection', socket =>{
+
+        console.log(socket.handshake.headers);
+        console.log("hello");
         
         /*
         TODO: Create a authentication logic for handshake, separate services in their own socket files
@@ -12,8 +15,6 @@ function setup_socket(io){
         
         */
        // TODO: Only one feature per connection
-       
-       console.log("Well");
        
        // chat_handler(socket);
        
