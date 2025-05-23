@@ -77,3 +77,9 @@ async function search_clicked(item){
 
     // TODO: Allow user to clicked on a search list and fetch post to create a new temporary conversation
 }
+
+async function delete_temp(item){
+    console.log(item._id);
+
+    // TODO: Find a way to delete a conversation when user didnt send a message or if they clicked a new convo
+}

@@ -16,7 +16,7 @@ export default function ChatList() {
     *   DONE: Friend Search API / Search Algorithm ( '/api/friends/search?page=# &limit=# &find=# ' )
     *   DONE: Make a UI for displaying multiple users when client input a query on search bar
     *   DONE: Remove all friend on the chat list & Replace it with a Convo List ( CHAT BOX TICKET )
-    * 
+    
         !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
         TODO: Need to find a way to start/create a convo with friends

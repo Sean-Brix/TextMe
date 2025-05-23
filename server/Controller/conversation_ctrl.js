@@ -81,3 +81,7 @@ export async function addTemporary(req, res, next){
     }
 
 }
+
+export async function deleteTemporary(req, res, next){
+    
+}
