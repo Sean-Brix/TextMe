@@ -59,7 +59,7 @@ export default function Search_List({ find }) {
 
             {friendlist.map((item, index) => (
 
-                <div key={index} className={style.friend_container}>
+                <div key={index} className={style.friend_container} onClick={()=>search_clicked(item)}>
                     <h2>{item.username.toUpperCase()}</h2>
                     <p>{item._id.toUpperCase()}</p>
                 </div>
@@ -69,4 +69,11 @@ export default function Search_List({ find }) {
         </div>
     );
     
+}
+
+
+async function search_clicked(item){
+    console.log(item._id);
+
+    // TODO: Allow user to clicked on a search list and fetch post to create a new temporary conversation
 }

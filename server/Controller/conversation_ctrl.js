@@ -23,6 +23,7 @@ export async function getList(req, res, next){
         const skip = (page - 1) * limit;
         const user = await account.findById(req.user.ID);
 
+        // TODO: Add another time property to the conversatio schema to track the last sent message, in order to give an ordered list based on the current active messages
         // Populate the current user friend_list
         const conversation = (await user.populate({
             path: 'conversation',
