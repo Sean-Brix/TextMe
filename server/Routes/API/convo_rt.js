@@ -1,16 +1,16 @@
 import express from 'express'
-import { getConvo, getList } from '../../Controller/conversation_ctrl.js'
-import { verifyToken } from '../../Controller/authentication_ctrl.js'
+import { getConvo, getList, addTemporary } from '../../Controller/conversation_ctrl.js'
 
 // Route ( '/api/convo' )
 const router = express.Router();
 
 // TODO: Get current selected convo
-router.get('/ref', verifyToken, getConvo);
+router.get('/ref', getConvo);
 
 // TODO: Get All Convo List
-router.get('/list', verifyToken, getList);
+router.get('/list', getList);
 
-
+// TODO: Create temporary Convo
+router.post('/temp', addTemporary);
 
 export default router;

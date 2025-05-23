@@ -1,5 +1,5 @@
 import account from '../Model/Account_Model/Account_index.js'
-import convo from '../Model/Conversation_Model/Conversation_index.js'
+import Convo from '../Model/Conversation_Model/Conversation_index.js'
 
 export async function getConvo(req, res, next){
     const user = await account.findById(req.user.ID);
@@ -47,4 +47,37 @@ export async function getList(req, res, next){
         });
 
     }
+}
+
+// TODO: Create another function that removes these temporary convo
+export async function addTemporary(req, res, next){
+    
+    const user = req.user.ID;
+    const other = req.query.ref;
+
+    if(!other){
+        res.status(400).json({
+            message: "Bad Request: Did not add an account reference for participants"
+        })
+    }
+
+    try {
+        const temporary = new Convo({
+            participants: [user, other]
+        });
+
+        await temporary.save();
+
+        res.status(201).json({
+            message: "Temporary conversation created",
+            conversation: temporary
+        });
+    } 
+    catch (error) {
+        res.status(500).json({
+            message: "Failed to create temporary conversation",
+            error: error.message
+        });
+    }
+
 }

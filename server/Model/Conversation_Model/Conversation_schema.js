@@ -3,11 +3,12 @@ import mongoose from 'mongoose';
 const convo_schema = new mongoose.Schema({
 
     metadata:{
-        
+
         theme: { type: String, trim: true, lowercase: true, default: "default" },
         pinned_message: { type: String, trim: true, default: null },
         blocked: { type: mongoose.Schema.Types.ObjectId, ref: 'Accounts', default: null },
-        group: { type: Boolean, default: false }
+        group: { type: Boolean, default: false },
+        temporary: { type: Boolean, default: true }
 
     },
 
@@ -30,6 +31,7 @@ const convo_schema = new mongoose.Schema({
         nickname: { type: String, trim: true, default: null },
 
     }],
+
 
     createdAt: {
         type: Date,

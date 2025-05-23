@@ -1,5 +1,5 @@
 import express from 'express';
-import { login, register, tokenDestroy, verifyToken, checkAuth} from '../Controller/authentication_ctrl.js'
+import { login, register, tokenDestroy, checkAuth} from '../Controller/authentication_ctrl.js'
 
 // Route: ('/auth')
 const router = express.Router();
