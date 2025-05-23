@@ -3,9 +3,12 @@ import mongoose from 'mongoose';
 const convo_schema = new mongoose.Schema({
 
     metadata:{
+        
         theme: { type: String, trim: true, lowercase: true, default: "default" },
         pinned_message: { type: String, trim: true, default: null },
-        blocked: { type: mongoose.Schema.Types.ObjectId, ref: 'Accounts', default: null }
+        blocked: { type: mongoose.Schema.Types.ObjectId, ref: 'Accounts', default: null },
+        group: { type: Boolean, default: false }
+
     },
 
     messages: [{

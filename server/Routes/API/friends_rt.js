@@ -4,7 +4,6 @@ import { getFriendList, friendRequest, checkFriend, unfriend, removeRequest, acc
 // Route: ('/api/friends')
 const router = express.Router();
 
-
 router.get('/list', getFriendList);
 
 router.get('/search', searchFriend);

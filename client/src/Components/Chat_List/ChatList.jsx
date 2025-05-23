@@ -15,7 +15,13 @@ export default function ChatList() {
     
     *   DONE: Friend Search API / Search Algorithm ( '/api/friends/search?page=# &limit=# &find=# ' )
     *   DONE: Make a UI for displaying multiple users when client input a query on search bar
-        TODO: Remove all friend on the chat list & Replace it with a Convo List ( CHAT BOX TICKET )
+    *   DONE: Remove all friend on the chat list & Replace it with a Convo List ( CHAT BOX TICKET )
+    * 
+        !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+        TODO: Need to find a way to start/create a convo with friends
+
+        !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
     */
 
@@ -23,7 +29,7 @@ export default function ChatList() {
     const [search, setSearch] = useState("");
 
     // Holds User Render
-    const [friends, setFriends] = useState([]);
+    const [convo, setConvoList] = useState([]);
     const [selected, setSelected] = useState({});
     const prev_selected = useRef(null);
     const navigate = useNavigate();
@@ -33,23 +39,21 @@ export default function ChatList() {
 
         // Fetch the list
         (async()=>{
-
-            const authentication = await authorize_token();
-            
-            if (!authentication) {
+  
+            if (!(await authorize_token())) {
                 navigate('/');
                 return;
             }
 
-            const response = await fetch('/api/friends/list?page=1&limit=10');
+            const response = await fetch('/api/convo/list?page=1&limit=10');
             const data = await response.json();
 
-            // for rendering friend list
-            setFriends(data.friendList);
+            // for rendering existing convo list
+            setConvoList(data.convo);
 
-            // Set initial selected user
+            // Set initial selected convo room
             setSelected({
-                user: data.friendList[0],
+                user: data.convo[0],
                 target: prev_selected.current,
             });
         })()
@@ -59,6 +63,7 @@ export default function ChatList() {
     
     const SampleCount = useRef(0);
 
+    //! TO BE MODIFIED
     useEffect(()=>{
         
         /*
@@ -87,10 +92,6 @@ export default function ChatList() {
         //     socket.disconnect();
         // };
 
-        (async ()=>{
-            const response = await fetch('/api/convo/ref?room=21124');
-        })();
-
     }, [selected])
 
 
@@ -100,8 +101,8 @@ export default function ChatList() {
         event.preventDefault();
 
         // Exchange styles on click
-        prev_selected.current.className = style.friend_container;
-        event.currentTarget.className = style.selected_friend;
+        prev_selected.current.className = style.convo_container;
+        event.currentTarget.className = style.selected_convo;
 
         // Save previous selected user
         prev_selected.current = event.currentTarget;
@@ -135,19 +136,24 @@ export default function ChatList() {
                     </div>
                 </div>
                 
-                {!friends.length == 0 && friends.map((friend, index) => {
+                {!convo.length == 0 && convo.map((convo, index) => {
                     return (
                         <div 
-                            onClick={e=>{messageSelect(e, friend)}} 
+                            onClick={e=>{messageSelect(e, convo)}} 
                             key={`container:${index}`} 
                             ref={index===0? prev_selected:null}
-                            className={index===0? style.selected_friend : style.friend_container} 
+                            className={index===0? style.selected_convo : style.convo_container} 
                         >
 
                             <img src={default_profile} alt="" className={style.default_profile}/>
                             <div>
-                                <h1 className={style.friend_name}> {friend.username} </h1>
-                                <p className={style.friend_email}> {friend.email} </p>
+
+                            {/*    !!! Needs to be Changed into a convo property !!!    */}
+
+                                <h1 className={style.convo_name}> {convo.username} </h1>
+                                <p className={style.convo_email}> {convo.email} </p>
+
+
                             </div>
 
                         </div>
@@ -156,7 +162,7 @@ export default function ChatList() {
 
             </main>
             
-            { selected.user && <Chat_Box user={{ name: selected.user.username}} /> || <h1>Walang friend - HAHAHAHA</h1>}
+            { selected.user && <Chat_Box user={{ name: selected.user.username}} /> || <h1>No Existing Conversation</h1>}
 
         </>
     );

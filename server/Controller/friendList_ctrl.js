@@ -54,7 +54,10 @@ export async function getFriendList(req, res, next){
     } 
     catch (error) {
         console.error('Error fetching account list:', error);
-        throw error;
+        res.status(500).json({
+            message: 'getFriendList(): Failed to fetch Friend List',
+            error: error.message
+        });
     }
 }
 
