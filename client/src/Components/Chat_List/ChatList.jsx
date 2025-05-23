@@ -55,8 +55,10 @@ export default function ChatList() {
         })()
 
     }, [])
-
+ 
     
+    const SampleCount = useRef(0);
+
     useEffect(()=>{
         
         /*
@@ -69,20 +71,25 @@ export default function ChatList() {
             TODO: Handle all message retrieval and sending 
         */
 
-        socket.connect();
+        // socket.connect();
 
-        socket.on("connect", ()=>{
-            console.log("User Connected to Socket");
-        })
+        // socket.on("connect", ()=>{
+        //     console.log("User Connected to Socket");
+        // })
 
-        socket.emit("send", "sample data");
+        // socket.emit("send", SampleCount.current);
+        // SampleCount.current += 1;
 
-        return () => {
-            socket.off("connect", ()=>{
-                console.log("User Connected to Socket");
-            });
-            socket.disconnect();
-        };
+        // return () => {
+        //     socket.off("connect", ()=>{
+        //         console.log("User Connected to Socket");
+        //     });
+        //     socket.disconnect();
+        // };
+
+        (async ()=>{
+            const response = await fetch('/api/convo/ref?room=21124');
+        })();
 
     }, [selected])
 

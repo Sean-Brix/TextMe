@@ -1,10 +1,12 @@
 import express from 'express'
+import { getConvo } from '../../Controller/conversation_ctrl.js'
+import { verifyToken } from '../../Controller/authentication_ctrl.js'
 
-// Route ( '/api/messages' )
+// Route ( '/api/convo' )
 const router = express.Router();
 
 // TODO: Get all Existing convo 
-router.get('/getlist', (req, res)=>{});
+router.get('/ref', verifyToken, getConvo);
 
 
 
