@@ -52,7 +52,7 @@ export async function getList(req, res, next){
 // TODO: Create another function that removes these temporary convo
 export async function addTemporary(req, res, next){
     
-    const user = req.user.ID;
+    const userID = req.user.ID;
     const other = req.query.ref;
 
     if(!other){
@@ -63,7 +63,7 @@ export async function addTemporary(req, res, next){
 
     try {
         const temporary = new Convo({
-            participants: [user, other]
+            participants: [{ user: userID }, { user: other }]
         });
 
         await temporary.save();
